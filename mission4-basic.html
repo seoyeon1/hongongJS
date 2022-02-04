@@ -1,0 +1,22 @@
+<!-- 202쪽의 <윤년을 확인하는 함수 만들기> 예제를 실행하여 2022년이 윤년인지 확인하는 결과 인증샷 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Week 4 Mission</title>
+    <script>
+        //문제에 적힌 윤년의 각 특징을 논리연산자를 활용해 연결하면 간단하게 해결할 수 있다.
+
+        function isLeapYear(year) {
+            return (year % 4 === 0) && (year % 100 !== 0) || (year & 400 === 0)
+        }
+
+        console.log('2022년은 윤년일까? === ${isLeapYear(2022)}')
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
