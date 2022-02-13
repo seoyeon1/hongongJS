@@ -29,7 +29,8 @@
 
         // }
     </script> -->
-    <!-- <script>
+
+    <script>
         // 선언적 함수
         function 함수 () {
             console.log('1-함수 내부 코드입니다.')
@@ -52,7 +53,8 @@
         // }
 
 
-    </script> -->
+    </script>
+
     <script>
         // 기본 형태의 함수 만들기
         function f(x) {
@@ -61,6 +63,62 @@
 
         console.log(f(3)) // 9
     </script>
+
+    <script>
+        // sum a to b
+        function sumAll(a, b){
+            let output = 0
+            for (let i=a; i<=b; i++){
+                output += i
+            }
+            return output
+        }
+        // '' 이랑 `` 헷갈리지 말자
+        console.log(`1부터 100까지 합? ${sumAll(1, 100)}`) // 5050
+    </script>
+
+    <script>
+        // minimum
+        function min(array) {
+            let output = array[0] // output의 값이 계속 바뀔 것이니까 변수 let 선언
+            
+            for(const item of array){
+                if(output > item) { //현재 output 보다 작은 값이 있다면
+                    output = item
+                }
+            }
+            return output
+        }
+
+        const testArray = [52,273,32,103,275,24,57]
+        console.log(`${testArray} 중에서`)
+        console.log(`최솟값 = ${min(testArray)}`)
+    </script>
+
+    <script>
+        // maximum
+        function max(array){
+            let output = array[0]
+
+            for(const item of array){
+                if(output < item){
+                    output = item
+                }
+            }
+            return output 
+
+        }
+
+        const testArray2 = [52,273,32,103,275,24,57]
+        console.log(`${testArray2} 중에서`)
+        console.log(`최댓값 = ${max(testArray2)}`)
+    </script>
+
+    <script>
+        // 가변 매개변수 - 나머지 매개변수
+        
+    </script>
+
 </head>
 <body>
     
