@@ -14,45 +14,54 @@
 
     </div>
 </body>
+
 <script>
     document.addEventListener('DOMContentLoaded', () =>{
 
+        // HTML 요소(문서 객체)를 읽어오기
         const input = document.querySelector('#todo')
         const todoList = document.querySelector('#todo-list')
-        const addButton = document.querySelector('add-btn')
+        const addButton = document.querySelector('#add-btn')
 
 
         let keyCount = 0
 
+        // 함수 구현 - 할 일 추가 기능
         const addTodo = () => {
 
+            // 할 일 내용이 비었을 때 > 할 일 추가 X
             if (input.value.trim() === '') {
-                alert('할 일 입력')
+                alert('할 일 입력하세요')
                 return
             }
 
+            // 필요한 문서 객체 생성
             const item = document.createElement('div')
             const checkbox = document.createElement('input')
             const text = document.createElement('span')
             const button = document.createElement('button')
 
-            
+            // 문서 객체 식별키 - removeTodo() 용도
             const key = keyCount
             keyCount += 1
 
+
+            // item(부모) 객체 속성 조작, 자식 객체 추가
             item.setAttribute('data-key', key)
             item.appendChild(checkbox)
             item.appendChild(text)
             item.appendChild(button)
             todoList.appendChild(item)
 
+            // checkbox 객체 조작 - 체크박스 클릭 > 선 긋기
             checkbox.type = 'checkbox'
             checkbox.addEventListener('change', (event) => {
 
                 item.style.textDecoration 
-                     event.target.checked ? 'line-through' : ''
+                    = event.target.checked ? 'line-through' : ''
             })
 
+            // text 객체 조작 - 입력 문자열 그대로 가져오기
             text.textContent = input.value
 
             button.textContent = '제거하기'
@@ -60,19 +69,26 @@
                 removeTodo(key)
             })
 
+            //입력 내용 지우기
             input.value = ''
 
         }
 
+
+        // 함수 구현 - 식별키를 기준, 할 일 목록에서 할 일 제거(완료) 기능
         const removeTodo = (key) => {
 
-            const item = document.querySelector(`[data-key = "${key}"]`)
+            // <div data-key='숫자'> : 숫자(식별키)으로 판단, 할 일 제거
+            const item = document.querySelector(`[data-key="${key}"]`)
             todoList.removeChild(item)
         }
 
+
+        // 이벤트 연결
         addButton.addEventListener('click', addTodo)
         input.addEventListener('keyup', (event) => {
 
+            // 입력 후 ENTER 키 > 할 일 추가
             const ENTER = 13
             if (event.keyCode === ENTER) {
                 addTodo()
