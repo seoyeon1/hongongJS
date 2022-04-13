@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>함수를 함수의 매개변수로 전달하기</title>
+    <script>
+    // 콜백 함수 : 매개변수를 통해 함수를 받고(함수도 자료형이기 때문), 그 함수를 통해 결과값을 냄
+
+        function call3Times(callback) { // 매개변수=함수(print()), 해당 함수를 3번 호출
+            for (let i = 0; i < 3; i++) {
+                callback(i) //print(0), print(1), print(2)
+            }
+        }
+
+        function print(i) {
+            console.log(`${i}번째 함수 호출`)
+        }
+
+        call3Times(print)
+    </script>
+
+    <script>
+    // 콜백 함수 + 익명 함수
+        function call3Times(callback) { 
+            for (let i = 0; i < 3; i++) {
+                callback(i)
+            }
+        }
+        
+        call3Times(function (i) { // 익명 함수
+            console.log(`${i}번째 함수 호출`)
+        })
+    </script>
+
+    <script>
+        // 콜백 함수 - ForEach() : 배열이 갖고있는 메소드. 배열 내부의 요소를 사용해 콜백 함수 호출
+        const numbers = [13, 10, 516, 413]
+
+        numbers.forEach(function (value, index, array) {
+            console.log(`${index}번째 요소 : ${value}`)
+        })
+</script>
+    
+</head>
+<body>
+    
+</body>
+</html>

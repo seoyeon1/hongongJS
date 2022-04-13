@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가변 매개변수 함수-나머지 매개변수, 전개 연산자, 기본 매개변수</title>
+    <script>
+    // 나머지 매개변수
+        function min(first, ...rests) {
+            let output
+            let items
+            // 입력: 배열 - 출력 : 배열의 첫 번째 원소, 배열을 순회하면서 최솟값 찾기
+            if (Array.isArray(first)) {
+                output = first[0]
+                items = first
+            }
+            // 입력: 숫자들 - 출력 : 첫 번째 숫자, 나머지 매개변수를 이용해 숫자들(rests)을 배열로 만들어 순회, 최솟값 찾기
+            else if (typeof(first) === 'number') {
+                output = first
+                items = rests
+            }
+            
+            for (const item of items) {
+                if (output > item) {
+                    output = item
+                }
+            }
+            return output
+        }
+
+        console.log(`min(배열): ${min([12,10,54,13,6])}`)
+        console.log(`min(배열): ${min(12,10,54,13,6)}`)
+        
+    </script>
+
+    <script>
+        // (구 버전) 가변 매개변수 구현 - arguments : 매개변수와 관련된 여려 정보 확인, 배열과 비슷
+            function sample() {
+                console.log(arguments)
+                for (let index = 0; index < arguments.length; index++) {
+                    console.log(`${index} 번째 요소: ${arguments[index]}`)
+                }
+            }
+    
+            sample(1,2)
+            sample(1,2,3,4,5,6,7)
+    </script>
+
+    <script>
+    // 전개 연산자 : 배열을 전개해서 함수의 매개변수로 전달
+        function sample(...items) {// 나머지 매개변수
+            console.log(items)
+        }
+
+        const array = [1,2,3,4,5]
+
+        console.log('# 전개 연산자를 사용하지 않은 경우')//매개변수로 배열이 통으로 들어가 출력
+        sample(array)
+        console.log('# 전개 연산자를 사용한 경우')// 매개변수로 숫자 하나하나가 전개되어 들어감
+        sample(...array)// 전개 연산자
+        console.log('')
+    </script>
+    
+    <script>
+    // (구 버전) 전개 연산자 X - apply()
+        function sample(...items) {
+            console.log(items)
+        }
+
+        const arr = [1,2,3,4,5]
+        console.log('# 전개 연산자를 사용하지 않은 경우 - apply()')
+        console.log(sample.apply(null, arr))
+        console.log('')
+    </script>
+
+    <script>
+    // 기본 매개변수 : 매개변수에 기본값을 지정
+        function earnings (name, wage=8950, hours=40) {
+            console.log(`# ${name} 님의 급여 정보`)
+            console.log(`- 시급: ${wage}원`)
+            console.log(`- 근무시간: ${hours}시간`)
+            console.log(`- 급여: ${wage * hours}원`)
+            console.log('')
+        }
+
+        earnings('구름')
+        earnings('달', 10000)
+        earnings('별', 10000, 52)
+    </script>
+
+    <script>
+    // (구 버전) 기본 매개변수 구현 - 삼항 연산자, 짧은 조건문
+        function earnings1 (wage, hours) {
+            //undefined 자료형 : 상수와 변수로 선언하지 않은 식별자, 변수에 값을 지정하지 않은 경우(this case)
+            wage = typeof(wage) != undefined ? wage : 8950
+            hours = typeof(hours) != undefined ? hours : 40
+            return wage * hours
+        }
+
+        function earnings2 (wage, hours) {
+            // 매개변수 값으로 false/0/빈 문자열이 확실히 아닌 경우
+            wage = wage || 8950
+            hours = hours || 40
+            return wage * hours
+        }
+    </script>
+
+</head>
+<body>
+    
+</body>
+</html>
