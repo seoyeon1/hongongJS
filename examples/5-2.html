@@ -12,6 +12,7 @@
             for (let i = 0; i < 3; i++) {
                 callback(i) //print(0), print(1), print(2)
             }
+            console.log('')
         }
 
         function print(i) {
@@ -31,18 +32,72 @@
         
         call3Times(function (i) { // 익명 함수
             console.log(`${i}번째 함수 호출`)
+            
         })
+        console.log('')
     </script>
 
     <script>
-        // 콜백 함수 - ForEach() : 배열이 갖고있는 메소드. 배열 내부의 요소를 사용해 콜백 함수 호출
+    // 콜백 함수 - ForEach() : 배열이 갖고있는 메소드. 배열 내부의 요소를 사용해 콜백 함수 호출
         const numbers = [13, 10, 516, 413]
 
         numbers.forEach(function (value, index, array) {
             console.log(`${index}번째 요소 : ${value}`)
         })
-</script>
+        console.log('')
+    </script>
     
+    <script>
+    // 콜백 함수 - map()
+        let nums = [13, 10, 516, 413]
+        nums = nums.map(function (value) {
+            return value * value
+        })
+
+        nums.forEach(console.log)
+        console.log('')
+    </script>
+
+    <script>
+    // 콜백 함수 - filter()
+        const f_nums = [0,1,2,3,4,5]
+        const evenNums = f_nums.filter(function (value) {
+            return value % 2 === 0
+        })
+
+        console.log(`배열 입력 : ${f_nums}`)
+        console.log(`짝수만 추출 : ${evenNums}`)
+        console.log('')
+    </script>
+
+    <script>
+    // 화살표 함수 & 메소드 체이닝
+        let point_nums = [0,1,2,3,4,5,6,7,8,9]
+
+        point_nums
+            .filter((value) => value % 2 === 0 )
+            .map((value) => value * value)
+            .forEach((value) => {
+                console.log(value)
+            })
+        
+        console.log('')
+    </script>
+
+    <script>
+    // 타이머 함수
+        let id
+        let count = 0
+        id = setInterval(() => {
+            console.log(`1초마다 실행(${count+1}번째)`)
+            count++
+        }, 1*1000)// 1s = 1000
+
+        setTimeout(() => {
+            console.log('- time out -')
+            clearInterval(id)
+        }, 5 * 1000)
+    </script>
 </head>
 <body>
     
