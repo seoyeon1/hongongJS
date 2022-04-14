@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5. 함수 - 좀 더 알아보기</title>
+    <script>
+    // 변수 이름 충돌 문제 해결 : 각각 다른 블록에 속하게 스코프 단계 변경하기
+    // 섀도잉 : 블록이 다른 경우, 내부 변수가 외부 변수를 가려버려서 해당 블록 안에서는 외부 변수와 충돌하지 않음
+        // 외부에서 가져온 JS 코드
+        let pi = 3.14
+        console.log(`파이 값은 ${pi}입니다.`)
+
+        // 블록을 사용 > 스코프 생성
+        {
+            let pi = 3.141592
+            console.log(`파이 값은 ${pi}입니다.`)
+        }
+        console.log(`파이 값은 ${pi}입니다.`)
+
+        // 함수 블록 > 스코프 생성
+        function sample() {
+            let pi = 3.141592
+            console.log(`파이 값은 ${pi}입니다.`)
+        }
+        sample()
+        console.log(`파이 값은 ${pi}입니다.`)
+
+        console.log('')
+    </script>
+
+    <script>
+    // 변수 이름 충돌 문제 해결 - 즉시 호출 함수 사용(var 키워드 경우)
+    // 외부에서 가져온 JS 코드
+        let pi_1 = 3.14
+        console.log(`파이 값은 ${pi_1}입니다.`)
+    </script>
+    <script>
+    // 내가 작성한 JS 코드
+    // 즉시 호출 함수
+        (function () {
+            let pi_1 = 3.141592
+            console.log(`파이 값은 ${pi_1}입니다.`)
+        })()
+
+        console.log('')
+    </script>
+
+    <script>
+    // 엄격 모드
+        'use strict'
+        data = 10
+        console.log(data) // 5-extra.html:53 Uncaught ReferenceError: data is not defined
+    </script>
+    
+</head>
+<body>
+    
+</body>
+</html>
