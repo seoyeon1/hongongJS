@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>객체 자료형, prototype 객체</title>
+    <script>
+    // 프로토타입 객체 - 숫자 메소드 추가 : 숫자 자료형에 n 제곱
+        Number.prototype.power = function (n = 2) {
+            return this.valueOf() ** n // valueOf() : 객체 내부에서 값을 꺼내 쓰기
+        }
+
+        // 기본자료형(숫자) + Number 객체에 power() 메소드 사용
+        const a = 12
+        console.log('a.power()',a.power())
+        console.log('a.power(3)',a.power(3))
+        console.log('a.power(4)',a.power(4))
+
+        console.log('')
+    </script>
+    
+    <script>
+    // 프로토타입객체 - 문자열 메소드 추가
+        String.prototype.contain = function (data) {
+            return this.indexOf(data) >= 0 // 문자열 내부에 어떤 문자열이 존재하는지 T/F
+        }
+
+        Array.prototype.contain = function (data) {
+            return this.indexOf(data) >= 0
+        }
+
+        const t = '안녕하세요'
+        console.log('안녕 in 안녕하세요: ', t.contain('안녕'))
+        console.log('하이 in 안녕하세요: ', t.contain('하이'))
+
+        const arr = [273, 12, 5, 151]
+        console.log('273 in [273, 12, 5, 151]: ', arr.contain(273))
+        console.log('7 in [273, 12, 5, 151]: ', arr.contain(7))
+
+        console.log('')
+    </script>
+    
+    <script>
+    // JSON 객체
+        // JS 객체를 JSON 문자열로 변환 - JSON.stringfy()
+        // JSON 문자열을 JS 객체로 변환 - JSON.parse()
+        const data = [{
+            name : 'hello world!',
+            price : 20000,
+            publisher : 'sy'
+        }, {
+            name : 'jump to python',
+            price : 35000,
+            publisher : 'easy'
+        }]
+        // data > json
+        const json = JSON.stringify(data)
+        console.log(json) // 1 line
+        console.log(JSON.stringify(data, null, 2)) // formal
+
+        // json > data
+        console.log(JSON.parse(json))
+
+        console.log('')
+    </script>
+
+    <script>
+    // Math 객체 - Math.random() : 0 ~ 1 사이에 렌덤한 숫자 생성
+        const num = Math.random()
+
+        console.log('====random number====')
+        console.log('random number(0 ~1) : ', num)
+        console.log('random number(0 ~ 10) : ', num * 10)
+        console.log('random number(-5 ~ 5) : ', num * 10 - 5)
+        console.log('random number(-5 ~ 5, integer) : ', Math.floor(num * 10 - 5))
+
+        console.log('')
+    </script>
+</head>
+
+<body>
+    
+</body>
+</html>
