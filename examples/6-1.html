@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About object(객체)</title>
+    <script>
+    // 동적으로 객체 속성 추가
+        const student = {}
+        student.name = 'chimmy'
+        student.hobby = 'work hard'
+        student.dream = 'UNISTAR'
+    
+    // 객체 속성 제거 : delete 객체.속성
+
+        console.log(JSON.stringify(student, null, 2))
+    </script>
+    <script>
+    // 메소드 선언
+        const pet = {
+            name : '소금',
+            eat (food) {
+                alert(this.name + '은/는 ' + food + '을/를 먹습니다.')
+            }
+
+        }
+        pet.eat('연어')
+        console.log('')
+    </script>
+</head>
+<body>
+    
+</body>
+</html>

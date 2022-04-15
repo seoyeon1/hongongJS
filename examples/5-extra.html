@@ -48,10 +48,37 @@
     </script>
 
     <script>
-    // 엄격 모드
-        'use strict'
-        data = 10
-        console.log(data) // 5-extra.html:53 Uncaught ReferenceError: data is not defined
+    // 엄격 모드 : 'use strict' 라는 문자열을 읽으면서부터 해당 블록의 코드를 엄격하게 검사 e.g. 변수를 let 선언하지 않고 사용
+        (function () { // 방식 : 즉시 호출 함수 > 블록 맨 위에 엄격 모드 적용
+            'use strict'
+        let data = 10
+        console.log(data) // if let 키워드 사용X, Uncaught ReferenceError: data is not defined
+        })()    
+        
+    </script>
+
+    <script>
+    // 익명 함수 & 선언적 함수 - 사용하는 상황은 비슷. 실행 흐름을 예측하기 쉽고 안전을 위해 익명 함수로 통일해 사용하는 걸 선호
+        func = function () { // 코드 실행 후 해당 라인을 읽을 때(코드를 읽는 순서대로) 생성
+            console.log('익명 함수다')
+        }
+
+        function func () { // 코드 실행 전 생성
+            console.log('선언적 함수다')
+        }
+        func() // 익명 함수다 : (이유) 선언적 생성 > 코드 running > 익명 함수 생성
+    </script>
+
+    <script>
+    // let을 쓰는 이유 : var 키워드는 덮어쓰기 문제가 발생. let, const를 사용해 이를 차단
+        let 함수 = function () {
+            console.log('익명 함수')
+        }
+        function 함수() {
+            console.log('선언적 함수')
+        }
+
+        함수() // Uncaught SyntaxError: Identifier '함수' has already been declared
     </script>
     
 </head>
