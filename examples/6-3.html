@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>객체와 배열 - 속성 체크, 다중 할당, 얕은/깊은 복사</title>
+    <script>
+    // 객체 내부에 속성 존재 여부 확인 - 속성의 자료형이 undefined 인지 아닌지
+        // 객체 생성
+        const object = {
+            name : 'hello world!',
+            price : 20000,
+            publisher : 'sy'
+        }
+
+        // 객체에 없는 속성에 접근 > undefined
+        if (object.name !== undefined) {
+            console.log('name 속성이 있습니다.')
+        } else {
+            console.log('name 속성이 없습니다.')
+        }
+
+        if (object.author !== undefined) {
+            console.log('author 속성이 있습니다.')
+        } else {
+            console.log('author 속성이 없습니다.')
+        }
+
+        console.log('')
+
+        // 짧은 조건문 : 해당 속성이 업을 때만 로그 출력
+        object.name || console.log('name 속성이 없습니다.')
+        object.author || console.log('author 속성이 없습니다.')
+
+        console.log('=======================')
+
+        // 객체 기본 속성 지정 : 속성 여부 확인 > 만약 없다면 해당 속성, 지정해둔 기본값으로 적용됨
+        object.name = object.name !== undefined ? object.name : '제목 미정'
+        object.author = object.author !== undefined ? object.author : '저자 미상'
+
+        // 짧은 조건문
+        object.name = object.name || '제목 미정'
+        object.author = object.author || '저자 미상'
+        
+        console.log(JSON.stringify(object, null, 2))
+        console.log('')
+
+    </script>
+
+    <script>
+    // 다중 할당 - 객체 속성 꺼내서 다중 할당하기 (위에 생성해둔 객체 활용)
+        // 방법 1 : 객체에서 속성(변수) 그대로 추출
+        const {name, price} = object
+        console.log('# 속성 이름 그대로 꺼내서 출력하기')
+        console.log(name, price)
+        console.log('')
+        // 방법 2
+        const {a=name, b=price} = object
+        console.log('# 다른 이름으로 속성 꺼내서 출력하기') // a=name, b=price
+        console.log(a, b)
+
+        console.log('')
+    </script>
+
+    <script>
+    // 얕은 / 깊은 복사 - 배열 전개 연산자
+        console.log('# 객체 전개 연산자')
+
+        const merch_301 = ['우유', '식빵']
+        const merch_302 = merch_301 // 얕은 복사 : 이름만 다를 뿐 같은 배열
+        merch_302.push('candy')
+        merch_302.push('apple')
+
+        console.log(merch_301) // (4) ['우유', '식빵', 'candy', 'apple']
+        console.log(merch_302) // (4) ['우유', '식빵', 'candy', 'apple']
+        console.log('')
+
+        const merch_303 = [...merch_301] // 깊은 복사 - 전개 연산자 : 복사한 두 배열이 완전히 독립적(clone 만드는 것) 
+        merch_303.push('egg')
+        merch_303.push('meat')
+        // 배열 요소 추가 - 전개 연산자
+        const merch_401 = ['jam', ...merch_301, 'orange']
+
+        console.log(merch_301) // (4) ['우유', '식빵', 'candy', 'apple']
+        console.log(merch_303) // (6) ['우유', '식빵', 'candy', 'apple', 'egg', 'meat']
+        console.log(merch_401) // (6) ['jam', '우유', '식빵', 'candy', 'apple', 'orange']
+        
+    </script>
+
+    <script>
+    // 얕은 / 깊은 복사 - 객체 전개 연산자
+        console.log('# 객체 전개 연산자')
+
+        const 구름 = {
+            이름 : '구름',
+            나이 : 6,
+            종족 : '강아지'
+        }
+        const 별 = 구름 // 얕은 복사
+        별.이름 = '별'
+        별.나이 = 1
+
+        console.log(JSON.stringify(구름)) // {"이름":"별","나이":1,"종족":"강아지"}
+        console.log(JSON.stringify(별)) // {"이름":"별","나이":1,"종족":"강아지"}
+
+        const 달 = {...구름} // 깊은 복사
+        달.이름 = '달'
+        달.나이 = 13
+        
+        console.log(JSON.stringify(달)) // {"이름":"달","나이":13,"종족":"강아지"}
+
+        const 해 = { // 전개 연산자로 객체 요소 추가
+            ...구름,
+            이름 : '해', // 기존 속성 덮어 쓰기
+            종족 : '고양이',
+            예방접종 : true
+        }
+
+        console.log(JSON.stringify(해)) // {"이름":"해","나이":1,"종족":"고양이","예방접종":true}
+    </script>
+</head>
+<body>
+    
+</body>
+</html>
