@@ -11,29 +11,110 @@
             const h1 = (text) => `<h1>${text}</h1>`
             document.body.innerHTML += h1('DOMContentLoaded 이벤트 발생') // 기존에 body 요소를 읽어온 후 실행 > 코드 마지막쪽에 추가됨을 확인 
 
-    // 문서 객체 가져오기 - querySelector()
+        // 문서 객체 가져오기 - querySelector()
             const header = document.querySelector('h1')
 
             header.textContent = '헤더 수정함 -JS-'
-    // 스타일 조작
+        // 스타일 조작
             header.style.color = 'yellow'
             header.style.backgroundColor = 'black'
             header.style.padding = '10px'
-    // 글자 조작
+        // 글자 조작
             const a = document.querySelector('#a')
+            const b = document.querySelector('#b')
             a.textContent = '<h1>textContent라서 글자 그대로 출력</h1>'
             b.innerHTML = '<h1>innerHTML은 h1으로 변환 후 출력</h1>'
-    // 문서 객체 생성, 추가
+
+        // 문서 객체 생성, 추가 - appendChild()
             const div = document.createElement('div') 
             div.textContent = '동적으로 생성한 div 문서 객체'
             div.style.color = 'blue'
             document.body.appendChild(div) //코드 위에서 아래로 읽히므로 이게 가장 마자막으로 추가됨
+    
+        // 문서 객체 이동 - appendChild() & setTimeout()
+            // 서로 번갈아가면서 실행하는 함수 구현
+            const div1 = document.querySelector('#first')
+            const div2 = document.querySelector('#second')
+            const h2 = document.createElement('h2')
+            h2.textContent = '1s 마다 div 이동하기'
+            h2.style.backgroundColor = 'yellow'
+
+            const toOne = () => {
+                div1.appendChild(h2) // h2를 div1에 추가
+                setTimeout(toTwo, 1000) // 1s 후 to2nd() 실행
+            }
+            const toTwo = () => {
+                div2.appendChild(h2)
+                setTimeout(toOne, 1000) // 1s 후 to1st() 실행
+            }
+            toOne()
+        
+        // 문서 객체 제거 - removeChild()
+            div.parentNode.removeChild(div) // div 태그의 부모 객체(body)에 접근해서 제거
+            // document.body.removeChild(div) 같은 의미
+        
         })
     </script>
+    
+
+    <script>
+    // 이벤트 처리
+    // 이벤트 연결하기 - addEventListener(eventName, 콜백함수(이벤트리스너/이벤트헨들러)) : 이벤트가 발생할 때 실행할 함수
+        document.addEventListener('DOMContentLoaded', () => {
+            let counter = 0
+            let isConnect = false // 이벤트 연결 상태
+            
+            const h3 = document.querySelector('h3')
+            const pp = document.querySelector('#pp')
+            const connectBtn = document.querySelector('#connect')
+            const disconnectBtn = document.querySelector('#disconnect')
+
+            const listener = (event) => {
+                h3.textContent = `클릭 횟수 : ${counter++}` 
+            }
+
+            connectBtn.addEventListener('click', () => { // 연결이 해제된 상태 > 연결 상태 변경
+                if (isConnect === false) {
+                    h3.addEventListener('click', listener) // 이벤트 연결 : h3 태그에 'click' 이벤트가 발생할 때 마다 실행 > counter 증가
+                    pp.textContent = '이벤트 연결 상태 : 연결' //p태그 속 내용 변경
+                    isConnect = true
+                }
+            })
+            disconnectBtn.addEventListener('click', () => { // 연결 상태 > 해제 상태 변경
+                if (isConnect === true) {
+                    h3.removeEventListener('click', listener) // 이벤트 연결 해제(제거)
+                    pp.textContent = '이벤트 연결 상태 : 해제'
+                    isConnect = false
+                }
+            })
+        })
+    </script>
+    <style>
+        h3{
+            /* 해당 태그 위에 마우스 드래그(여러 번 클릭할 때 글자 선택되는 거) 금지 */
+            user-select: none;
+        }
+    </style>
 </head>
 <body>
     <h1></h1>
+    <h3>클릭 횟수 : 0</h3>
+    <button id="connect">이벤트 연결</button>
+    <button id="disconnect">이벤트 제거</button>
+    <p id="pp">이벤트 연결 상태 : 해제</p>
+
     <div id="a"></div>
     <div id="b"></div>
+
+    <div id="first">
+        번갈아 실행 - div1
+    </div>
+    <hr>
+    <div id="second">
+        번갈아 실행 - div2
+    </div>
+
+    <p>여기까지가 기존 body 내용, 아래 내용은 JS로 추가한 부분(hr제외)</p>
+    <hr>
 </body>
 </html>
