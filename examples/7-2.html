@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트 활용 - 이벤트 모델 / 객체 / 발생객체</title>
+    <script>
+    // 이벤트 모델
+    // 키보드 이벤트 - keyup() : 글자 수 세기
+        document.addEventListener('DOMContentLoaded', () => {
+            const textarea = document.querySelector('textarea')
+            const h1 = document.querySelector('h1')
+
+            textarea.addEventListener('keyup',(event) => { // 키보드에서 키가 떨어질 때 실행
+                const length = textarea.value.length
+                h1.textContent = `글자 수 : ${length}`
+            })
+        })
+    </script>
+
+    <script>
+    // 키보드 이벤트 - 이벤트 속성 : SNS에서 단축키 사용할 때 활용됨
+        document.addEventListener('DOMContentLoaded', () => {
+            const h2 = document.querySelector('.h2')
+            const print = (event) => {
+                let output = ''
+                output += `alt : ${event.altKey}<br>` // 이벤트 발생 > bool값 리턴
+                output += `ctrl : ${event.ctrlKey}<br>`
+                output += `shift : ${event.shiftKey}<br>`
+                // 이벤트 코드가 있으면 이벤트코드를 출력, undefined타입이면 이벤트키코드를 출력
+                output += `code : ${typeof(event.code) !== 'undefined' ? event.code : event.keyCode}<br>`
+                h2.innerHTML = output
+            }
+
+            document.addEventListener('keydown', print)
+            document.addEventListener('keyup', print)
+        })
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const star = document.querySelector('#star')
+            star.style.position = 'absolute'
+
+            let [x, y] = [0, 20]
+            const block = 20
+            const print = () => {
+                star.style.left = `${x*block}px`
+                star.style.top = `${y*block}px`
+            }
+            print()
+
+            // 별 움직이기
+            const [left, up, right,down] = [37,38,39,40]
+            document.body.addEventListener('keydown', (event) => {
+                switch (event.keyCode) {
+                    case left:
+                        x -= 1
+                        break
+                    case up:
+                        y += 1
+                        break
+                    case right:
+                        x += 1
+                        break
+                    case down:
+                        y -= 1
+                        break
+                }
+                print()
+            })
+        })
+    </script>
+</head>
+<body>
+    
+    <h1></h1>
+    <textarea></textarea>
+    
+    <br><br><br>
+    <h1 id="star">(～￣▽￣)~</h1>
+
+    <p>키보드 키들을 눌러보세요</p>
+    <h2 class="h2"></h2>
+
+
+    <p>방향키로 별 이동</p>
+
+</body>
+</html>
