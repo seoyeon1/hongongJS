@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이벤트 발생 객체 활용</title>
+    <script>
+    // 이메일 형식 확인 - indexOf()로 매개변수로 전달된 값이 이메일인지 확인 > T/F
+        document.addEventListener("DOMContentLoaded", () => {
+            const input_e = document.querySelector('#input_e')
+            const p_e = document.querySelector('#p_e')
+            // 이메일 형식인지 체크 : @ 포함 & @이후 문장에 '.' 포함
+            const isEmail = (value) => {
+                return (value.indexOf('@') > 1) && (value.split('@')[1].indexOf('.') > 1)
+            }
+
+            input_e.addEventListener('keyup', (event) => {
+                const value = event.currentTarget.value
+                if (isEmail(value)) {
+                    p_e.style.color ='green'
+                    p_e.textContent = `이메일 형식입니다: ${value}`
+                } else {
+                    p_e.style.color = 'red'
+                    p_e.textContent = `이메일 형식이 아닙니다: ${value}`
+                }
+            })
+        })
+    </script>
+
+    <script>
+    // <select> 태그 : 드롭다운 목록 활용
+        document.addEventListener('DOMContentLoaded', () => {
+            const select_food = document.querySelector('#select_food')
+            const p_food = document.querySelector('#p_food')
+
+            select_food.addEventListener('change', (event) => {
+                const options = event.currentTarget.options
+                const index = event.currentTarget.options.selectedIndex
+
+                p_food.textContent = `선택 : ${options[index].textContent}` // 선택한 옵션 태그, 그 내용(메뉴) 가져오기
+            })
+        })
+    </script>
+
+    <script>
+    // 체크박스 활용 - checked 속성
+        document.addEventListener('DOMContentLoaded', () => {
+            let [timer, timerId] = [0,0]
+            const h1_time = document.querySelector('.h1_time')
+            const checkbox_time = document.querySelector('#checkbox_time')
+            
+            // change 이벤트 발생 > 체크 상태인지 확인(checked 속성) > setInterval() 실행
+            checkbox_time.addEventListener('change', (event) => {
+                if (event.currentTarget.checked) {
+                    timerId = setInterval(() => {
+                        timer += 1
+                        h1_time.textContent = `${timer}초`
+                    }, 1000)
+                } else {
+                    clearInterval(timerId)
+                }
+            })
+        })
+    </script>
+
+    <script>
+    // 기본 이벤트 막기(제거) - preventDefault() 
+        // 기본 이벤트 - contextmenu 이벤트 : 웹브라우저에서 이미지 우클릭 할 때 발생
+        document.addEventListener('DOMContentLoaded', () => {
+            const imgs = document.querySelectorAll('img')
+
+            // 이미지 우클릭 할 때 발생하는 기본 이벤트 제거 > 이미지 불펌 방지
+            imgs.forEach((img) => {
+                img.addEventListener('contextmenu', (event) => {
+                    event.preventDefault()
+                })
+            })
+        })
+    </script>
+
+    <script>
+    // localStorage 객체 : 웹 브라우저에 데이터를 저장
+        document.addEventListener('DOMContextLoaded', () => {
+            const p = document.querySelector('p')
+            const input = document.querySelector('input')
+            const btn = document.querySelector('button')
+
+            const savedValue = localStorage.getItem('input') // 저장된 값 추출. input으로 들어온 값 읽기
+            
+            if (savedValue) {
+                input.value = savedValue
+                p.textContent = `이전 실행 때의 마지막 값 : ${savedValue}`
+            }
+
+            input.addEventListener('keyup', (event) => {
+                const value = event.currentTarget.value
+                localStorage.setItem('input', value) // 값을 저장
+            })
+
+            btn.addEventListener('click', (event) => {
+                localStorage.clear() // 저장된 모든 값 제거
+                input.value = ''
+            })
+        })
+    </script>
+
+</head>
+<body>
+    <input type="text" id="input_e">
+    <p id="p_e"></p>
+
+    <hr>
+
+    <select id="select_food">
+        <option value="">떡볶이</option>
+        <option value="">순대</option>
+        <option value="">어묵</option>
+        <option value="">튀김</option>
+    </select>
+    <p id="p_food">선택 : 떡볶이</p>
+
+    <hr>
+
+    <input type="checkbox" name="" id="checkbox_time">
+    <span>타이머 활성화</span>
+    <h1 class="h1_time"></h1>
+
+    <hr>
+
+    <img src="http://placekitten.com/300/300" alt="">
+
+    <hr>
+
+    <p></p>
+    <button>지우기</button>
+    <input type="text" name="" id="">
+
+</body>
+</html>

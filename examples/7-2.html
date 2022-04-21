@@ -39,11 +39,13 @@
     </script>
 
     <script>
+    // 키보드 이벤트 - 방향키로 별 움직이기
         document.addEventListener('DOMContentLoaded', () => {
             const star = document.querySelector('#star')
-            star.style.position = 'absolute'
+            star.style.position = 'absolute' // 별의 position 스타일 설정
 
-            let [x, y] = [0, 20]
+            // 시작 점(x,y) 셋팅, 화면에 띄우기
+            let [x, y] = [20, 20]
             const block = 20
             const print = () => {
                 star.style.left = `${x*block}px`
@@ -51,27 +53,52 @@
             }
             print()
 
-            // 별 움직이기
-            const [left, up, right,down] = [37,38,39,40]
+            // 방향키를 누르면서 별 이동하기 - keydown 이벤트
+            const [left, up, right,down] = [37,38,39,40] // 방향키 키코드
             document.body.addEventListener('keydown', (event) => {
                 switch (event.keyCode) {
                     case left:
                         x -= 1
                         break
                     case up:
-                        y += 1
+                        y -= 1
                         break
                     case right:
                         x += 1
                         break
                     case down:
-                        y -= 1
+                        y += 1
                         break
                 }
                 print()
-            })
+            })  
+            
         })
     </script>
+
+    <script>
+    // 이벤트 발생 객체에 접근 - event.currentTarget / this 키워드
+        document.addEventListener('DOMContentLoaded', () => {
+            const input = document.querySelector('input')
+            const btn = document.querySelector('button')
+            const text = document.querySelector('.text')
+
+            btn.addEventListener('click', () => {
+                const inch = Number(input.value) // 입력한 값을 숫자 변환
+                
+                // 숫자가 아닌 값을 입력한 경우 - isNaN()
+                if (isNaN(inch)) {
+                    text.textContent = '숫자를 입력해주세요'
+                    return // 조기 리턴 : 조건(함수)의 결과 숫자가 아닌 true로 나오는 경우, (뒤에 코드를 실행X) 바로 탈출해서 코드를 더 깔끔해질 수 있는 패턴
+                }
+
+                const cm = inch * 2.54
+                text.textContent = `${cm} cm`
+            })
+
+        })
+    </script>
+    
 </head>
 <body>
     
@@ -79,13 +106,20 @@
     <textarea></textarea>
     
     <br><br><br>
-    <h1 id="star">(～￣▽￣)~</h1>
+    
 
     <p>키보드 키들을 눌러보세요</p>
     <h2 class="h2"></h2>
 
+    <p>inch to cm</p>
+    <input type="text"> inch
+    <br>
+    <button>계산</button>
+    <p class="text"></p>
+
 
     <p>방향키로 별 이동</p>
+    <h1 id="star">🧟‍♀️🧟‍♂️🧟‍♀️🧟‍♂️🧟‍♀️🧟‍♂️🧟‍♀️🧟‍♂️</h1>
 
 </body>
 </html>
