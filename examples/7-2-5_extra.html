@@ -31,14 +31,26 @@
     <script>
     // <select> 태그 : 드롭다운 목록 활용
         document.addEventListener('DOMContentLoaded', () => {
-            const select_food = document.querySelector('#select_food')
+            const select_food = document.querySelector('select')
             const p_food = document.querySelector('#p_food')
+            // if 단일 선택
+            // select_food.addEventListener('change', (event) => {
+            //     const options = event.currentTarget.options
+            //     const index = event.currentTarget.options.selectedIndex
 
+            //     p_food.textContent = `선택 : ${options[index].textContent}` // 선택한 옵션 태그, 그 내용(메뉴) 가져오기
+            // })
             select_food.addEventListener('change', (event) => {
-                const options = event.currentTarget.options
-                const index = event.currentTarget.options.selectedIndex
+                const options = event.currentTarget.options // 모든 option들을 가져옴
+                const list = [] // 선택한 음식들을 담을 리스트
 
-                p_food.textContent = `선택 : ${options[index].textContent}` // 선택한 옵션 태그, 그 내용(메뉴) 가져오기
+                for (const option of options) { // options 속성에는 foreach()가 없기에 for문으로 대체
+                    if (option.selected) { // 선택된 옵션을 확인(ctrl을 눌러 다중 선택 가능)
+                        list.push(option.textContent)
+                    }
+                }
+                
+                p_food.textContent = `선택 : ${list.join(',')}` // 선택한 옵션 태그, 그 내용(메뉴) 가져오기
             })
         })
     </script>
@@ -65,6 +77,25 @@
     </script>
 
     <script>
+    // 라디오 버튼 활용 - name 속성 : 동일하게 입력(단일 선택) / 입력X(다중선택 가능 but 취소 불가) > radio btn은 꼭 name 속성도 함께
+    //                 - checked 속성 : 체크 상태 확인
+        document.addEventListener('DOMContentLoaded', () => {
+            // 문서 객체 추출
+            const output = document.querySelector('#output')
+            const radios = document.querySelectorAll('[name=pet]')
+            // 모든 라디오 버튼에 대해
+            radios.forEach((radio) => {
+                radio.addEventListener('change', (event) => { // 이벤트 연결
+                    const current = event.currentTarget
+                    if (current.checked) {
+                        output.textContent = `당신이 좋아하는 반려동물은 ${current.value}이군요!`
+                    }
+                })
+            })
+        })
+    </script>
+
+    <script>
     // 기본 이벤트 막기(제거) - preventDefault() 
         // 기본 이벤트 - contextmenu 이벤트 : 웹브라우저에서 이미지 우클릭 할 때 발생
         document.addEventListener('DOMContentLoaded', () => {
@@ -80,11 +111,40 @@
     </script>
 
     <script>
+    // 다양한 입력 양식 활용 - cm를 여러 단위로 변환
+        document.addEventListener('DOMContentLoaded', () => {
+            let 현재값
+            let 변환상수 = 10
+
+            const select_cm = document.querySelector('#select_cm')
+            const input_cm = document.querySelector('#input_cm')
+            const span_cm = document.querySelector('#span_cm')
+            
+            const calculate = () => {
+                span_cm.textContent = (현재값 * 변환상수).toFixed(2) // 소수점 이하 2자리
+            }
+
+            select_cm.addEventListener('change', (event) => {
+                const option_cm = event.currentTarget.options
+                const index = event.currentTarget.option_cm.selectedIndex
+                변환상수 = Number(option_cm[index].value)
+                calculate()
+            })
+
+            input_cm.addEventListener('keyup', (event) => {
+                현재값 = Number(event.currentTarget.value) // 현재값 추출
+                calculate()
+            })
+
+        })
+    </script>
+
+    <script>
     // localStorage 객체 : 웹 브라우저에 데이터를 저장
-        document.addEventListener('DOMContextLoaded', () => {
-            const p = document.querySelector('p')
-            const input = document.querySelector('input')
-            const btn = document.querySelector('button')
+        document.addEventListener('DOMContentLoaded', () => {
+            const p = document.querySelector('.saved_txt')
+            const input = document.querySelector('#typed')
+            const btn = document.querySelector('#clear_btn')
 
             const savedValue = localStorage.getItem('input') // 저장된 값 추출. input으로 들어온 값 읽기
             
@@ -112,29 +172,63 @@
 
     <hr>
 
-    <select id="select_food">
+    <!-- 단일 선택 -->
+    <!-- <select id="select_food">
         <option value="">떡볶이</option>
         <option value="">순대</option>
         <option value="">어묵</option>
         <option value="">튀김</option>
     </select>
-    <p id="p_food">선택 : 떡볶이</p>
+    <p id="p_food">선택 : 떡볶이</p> -->
+    <h3>먹고 싶은 거 다 고르기(select multiple)</h3>
+    
+    <select multiple>
+        <option value="">떡볶이</option>
+        <option value="">순대</option>
+        <option value="">어묵</option>
+        <option value="">튀김</option>
+    </select>
+    <p id="p_food"></p>
 
     <hr>
 
     <input type="checkbox" name="" id="checkbox_time">
     <span>타이머 활성화</span>
     <h1 class="h1_time"></h1>
+    
+    <hr>
+
+    <h3 id="h3_radio"># 좋아하는 반려동물을 선택해주세요</h3>
+    <!-- 단일 선택만 가능하게 하도록 name을 동일하게 입력해서 버튼들을 그룹화 -->
+    <input type="radio" name="pet" value="병아리" id=""> 
+    <span>병아리</span>
+    <input type="radio" name="pet" value="강양이" id="">
+    <span>강양이</span>
+    <input type="radio" name="pet" value="뱀" id="">
+    <span>뱀</span>
+    <input type="radio" name="pet" value="기타" id="">
+    <span>기타</span>
+    <br>
+    <h3 id="output"></h3>
 
     <hr>
 
-    <img src="http://placekitten.com/300/300" alt="">
-
+    <img src="http://placekitten.com/300/300" alt="">\
+    
     <hr>
 
-    <p></p>
-    <button>지우기</button>
-    <input type="text" name="" id="">
+    <input type="text" id="input_cm"> cm = <span id="span_cm"></span>
+    <select id="select_cm">
+        <option value="10">mm</option>
+        <option value="0.01">m</option>
+        <option value="0.393701">inch</option>
+    </select>
+
+    <hr>
+    <h2>localStorage 객체</h2>
+    <p class="saved_txt"></p>
+    <button id="clear_btn">지우기</button>
+    <input type="text" id="typed">
 
 </body>
 </html>
