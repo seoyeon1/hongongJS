@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>예외 처리</title>
+</head>
+<body>
+    
+</body>
+<script>
+// 기본 예외 처리 : 조건문 사용
+    // 문서 객체를 선택했는데 문서 객체가 없는 경우
+    document.addEventListener('DOMContentLoaded', () => { // html 문서를 다 읽어드린 후에 실행하기 때문에 이 파일에서는 마지막에 실행 됨
+        const h1 = document.querySelector('h1')
+
+        if (h1) { // h1이 존재한다면 T / 없으면 F
+            h1.textContent = '좀 잘 하고 싶다'
+        }
+        else {
+            console.log('h1 태그를 추출할 수 없으요')
+        }
+    })
+</script>
+
+<script>
+// 고급 예외 처리 : try catch finally 구문 사용
+    try {
+        willExcept.byBye() // 예외를 발생 : willExcept 객체도 없고, byeBye() 메소드도 없기 때문
+        console.log('try 구문의 마지막 줄입니다') // 예외가 발생 > 이 부분은 실행하지 않고 catch로 이동
+    } catch (exception) { // 예외가 발생 > catch문 블록 속 코드를 실행
+        console.log('catch 구문의 마지막 줄입니다')
+    } finally { // 예외 발생 여부와 상관없이 무조건 실행하는 부분
+        console.log('finally 구문의 마자막 줄입니다')
+    }
+</script>
+
+<script>
+// finally 구문을 사용하는 이유 - 비교1 : catch문에서 리턴 
+    function test () {
+        try {
+            alert('A part')
+            throw "예외 강제 발생" // throw 키워드 : 예외를 강제 발생시킴
+        } catch (exception) {
+            alert('B part')
+            return
+        }
+        alert("C part") // return 키워드로 함수 자체를 벗어나버렸기 때문에 이 문장은 실행X
+    }
+
+    test()
+</script>
+<script>
+// finally 구문을 사용하는 이유 - 비교2 : 비교1 + finally 구문
+    function test () {
+        try {
+            alert('A part')
+            throw "예외 강제 발생"
+        } catch (exception) {
+            alert('B part')
+            return
+        } finally {
+        alert("C part") // finally 구문은 반드시 실행돼야 하기에 A,B,C 다 출력 됨
+        }
+    }
+
+    test()
+</script>
+
+
+</html>
