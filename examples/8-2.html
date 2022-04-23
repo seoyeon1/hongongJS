@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>예외 처리 고급</title>
+</head>
+<body>
+    
+</body>
+<script>
+// 예외 객체( exception / e ) 정보 출력
+    try {
+        const arr = new Array(99999999999999999) // err > 배열을 너무 크게 선언
+    } catch (exception) {
+        console.log(exception) // RangeError: Invalid array length at 8-2.html:51:21
+        console.log()
+        console.log(`exception name : ${exception.name}`) // exception name : RangeError
+        console.log(`exception message : ${exception.message}`) // exception message : Invalid array length
+    }
+</script>
+
+<script>
+// throw 구문 : 예외를 강제로 발생 - throw 문자열 / throw new Error(문자열)
+// : JS는 NaN / undefined 때문에 다른 언어에 비해 예외를 많이 발생하지 않음. 의도한 대로 처리하도록 유도 + 더 안전한 코드를 위해 예외를 강제로 발생시켜줌
+    function divide(a, b) {
+        if ( b === 0) {
+            throw '0으로 나눌 수 없음'
+        }
+        return a / b
+    }
+
+    console.log(divide(10, 2))
+    console.log(divide(1, 0)) // Uncaught 0으로 나눌 수 없음
+</script>
+
+<script>
+// 예외 강제 발생 > 사용자가 문제를 인지, 의도대로 처리하도록 유도
+    // obj 객체에는 a, b 속성 없음 > obj.a, obj.b 둘 다 undefined 판단. undefined + undefined = NaN > 오류라고 판단 X > 예외를 강제로 발생 필요
+    function test(obj) {
+
+        if (obj.a !== undefined && obj.b !== undefined) {
+            console.log(obj.a + obj.b)
+        } else {
+            throw new Error('a 속성과 b 속성을 지정하지 않았습니다') // 예외 강제 발생
+        }
+         
+    }
+
+    test({}) // 8-2.html:82 Uncaught Error: a 속성과 b 속성을 지정하지 않았습니다 at test (8-2.html:82:19)
+
+</script>
+
+<script>
+    try {
+        console.log('try part')
+        const array = ['apple', 'cat', 'bed']
+        array.forEach(() => {
+            throw new Error('errrrrrrrrrror') // 콜백 함수 내에서 에러 발생
+        })
+    } catch (e) {
+        console.log('catch part')
+        console.log(e.message)
+    } finally {
+        console.log('finally part')
+    }
+    // 실행 결과
+    // try part
+    // catch part
+    // errrrrrrrrrror
+    // finally part
+</script>
+
+<script>
+// 예외를 사용한 에러 처리 - 에러의 상위 통합 처리 : 예외는 함수를 호출한 상위로 전파된다
+    // 호출 순서 : global > a > b > c(err 발생) > b > a > global(trycatch 문에서 c()의 예외 처리) 
+    try {
+        a();
+    } catch(e) {
+    console.log(e); // c()에서 발생한 에러 출력 : 에러가 발생했다!
+    console.log('에러에서 복구됐다.');
+    }
+
+    function a() {
+    b();
+    }
+
+    function b() {
+    c();
+    }
+    
+    // throw 된 예외를 try-catch로 감싸지 않으면 함수를 호출한 상위로 전파 : c > b > a > global
+    function c() {
+    throw '에러가 발생했다!';
+    }   
+
+</script>
+
+<script>
+// 비동기 에러 처리 - 콜백 함수 에러 처리 : 오류 우선 콜백
+
+// JS는 싱글 스레드를 사용 > 동기적(작성 순서 === 실행 순서)으로 코드를 실행했을 때 대기가 발생한다면, 대기시간동안 아무것도 못한 채로 대기만 해야함(끔찍) > 비동기적 프로그래밍을 하는 것
+
+// 비동기 프로그래밍(작성 순서 !== 실행 순서)은 실행 순서를 잘 고려해서 작성해야 한다. (콜백지옥에 빠지지 않기 위해 > promise, async & await)
+// 콜백 스타일의 비동기 처리는 작성한 곳에서 함수가 호출되지 않음 e.g.setTimeout()함수는 콜백함수, 타임 이벤트에 의해 호출됨
+// > 단순히 try문에 넣어도( just 정의) trycatch문 안에서 발생한 오류가 아니기 때문에 setTimeout()에서 throw를 해도 예외 감지(catch) X
+
+// > JS에서 콜백을 사용할 때는 에러처리가 어려워짐 > "오류 우선 콜백(error first callback)" 패턴 사용
+// 오류 우선 콜백 : 콜백 함수의 첫 번째 매개변수로 에러 객체를 사용. 정상 코드인지 판단 : 에러가 null / undefined일 때
+
+// 아래 예시는 Node.js 에서의 오류 우선 콜백 사용한 것(흐름 이해, node.js 몰라서 아직 정확하게는 모름)
+    // const fs = require('fs');
+
+    // const fname = 'may_or_may_not_exist.txt';
+    // fs.readFile(fname, function(err, data){
+    // if(err) return console.error(`error reading file ${fname}: ${err.message}`);
+    // console.log(`${fname} contents: ${data}`);
+    // });
+</script>
+</html>
