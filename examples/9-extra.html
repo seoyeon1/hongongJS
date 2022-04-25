@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>오버라이드</title>
+</head>
+<body>
+    
+</body>
+<script>
+    class LifeCycle {
+        call() {
+            this.a()
+            this.b()
+            this.c()
+        }
+
+        a () { console.log('a() 메소드를 호출')}
+        b () { console.log('b() 메소드를 호출')}
+        c () { console.log('c() 메소드를 호출')}
+    }
+
+    class Child extends LifeCycle {
+        a () {
+            super.a() // super 키워드 : 부모의 a()가 실행됨
+            console.log('자식의 a() 메소드를 호출') // 오버라이딩
+        }
+        
+    }
+
+    new Child().call() // 오버라이드했으므로 call()이 실행될 때, 자식의 a()가 호출됨
+
+    // a() 메소드를 호출
+    // 자식의 a() 메소드를 호출
+    // b() 메소드를 호출
+    // c() 메소드를 호출
+</script>
+<script>
+    class Pet {
+        constructor (name, age){
+            this.name = name
+            this.age = age
+        }
+
+        toString() {
+            return `이름 : ${this.name}\n나이 : ${this.age}살`
+        }
+    }
+
+    const pet = new Pet('밤', 1)
+    alert(pet) // alert() : 매개변수를 문자열로 변환 후 출력 > 오버라이드한 toString() 호출됨
+    console.log(pet + '') // 문자열 결합 연산자(+) 호출 > 오버라이드한 toString() 호출됨
+
+    // 이름 : 밤
+    // 나이 : 1살
+</script>
+</html>

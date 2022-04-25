@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리액트 라이브러리 기본</title>
+    <!-- 리액트 기본 설정 - React, babel CDN -->
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.17.9/babel.min.js"></script>
+</head>
+<body>
+    <!-- 루트 컴포넌트 -->
+    <div id="root"></div>
+
+    <!-- react 사용하는 코드 -->
+    <script type="text/babel"> // react만의 확장된 JS문법을 사용하게 위해 > 바벨 라이브러리를 적용하겠다고 선언
+        const component = <h1>react basic</h1>
+        const container = document.getElementById('root') // 컴포넌트를 출력할 상자. root : 가장 최상위에 배치하는 컴포넌트
+
+        ReactDOM.render(component, container) // 컴포넌트 출력 : 컴포넌트(h1)를 div#root에 출력
+    </script>
+</body>
+</html>

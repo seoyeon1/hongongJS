@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>클래스 고급</title>
+</head>
+<body>
+    
+</body>
+<script>
+    // 사각형 클래스 : 부모 클래스
+    class Rectangle {
+        constructor (width, height) { // 생성자 함수
+            this.width = width
+            this.height = height
+        }
+
+        getPerimeter () { // 사각형 둘레 계산 메소드
+            return 2 * (this.width + this.height)
+        }
+
+        getArea () { // 사각형 넓이 계산
+            return this.width * this.height
+        }
+    }
+    // 정사각형 클래스 : 자식 클래스
+    class Square extends Rectangle { // 상속
+        constructor (length) {
+            super(length, length) // 부모의 생성자 함수 호출
+        }
+    }
+
+    const square = new Square(10, 20)
+    console.log(`정사각형 둘레 : ${square.getPerimeter()}`) // 40. 상속 받았으므로 부모의 메소드를 사용
+    console.log(`정사각형 넓이 : ${square.getArea()}`) // 100
+</script>
+
+<script>
+// getter 와 setter 
+    class Square_gettersetter {
+        #length // private 속성
+
+        constructor (length) {
+            this.setLength(length)
+        }
+
+        setLength (value) {
+            if (value <= 0) { // 함수 내부에서 예외처리 가능
+                throw '길이는 0보다 커야 합니다.' 
+            }
+            this.#length = value
+        }
+
+        getLength (value) {
+            return this.#length
+        }
+
+        getPerimeter () { return 4 * this.#length }
+        getArea() { return this.#length * this.#length }
+    }
+
+    const square2 = new Square_gettersetter(10)
+    console.log(`한 변의 길이는 ${square2.getLength()}입니다.`) // 한 변의 길이는 10입니다.
+
+    square2.setLength(-10) // 예외 발생. Uncaught 길이는 0보다 커야 합니다.
+</script>
+
+<script>
+// get, set, static 키워드 (수정예정)
+        class Square_getset {
+            #length // private 속성
+            static #counter = 0 // private, static은 같이 적용 가능
+            static get counter () { // static 메소드(게터)
+                return Square_getset.#counter
+            }
+
+            constructor (length) {
+                this.length = length // set length (length) 가 호출됨
+                Square_getset.#counter += 1 // static 속성 : 인스턴스를 만들지 않고 일반 변수, 함수처럼 사용가능
+            }
+            // static 메소드 : 객체 생성 없이도 계산 가능
+            static perimeterOf (length) { 
+                return length * 4
+            }
+            static areaOf (length) {
+                return length * length
+            }
+
+            get length () { return this.#length } 
+            get perimeter () { return this.#length * 4 }
+            get area() { return this.#length * this.#length }
+    
+            set length (length) {
+                if (length <= 0) { // 함수 내부에서 예외처리 가능
+                    throw '길이는 0보다 커야 합니다.' 
+                }
+                this.#length = length
+            }
+        }
+        // static 속성 사용
+        const squareA = new Square_getset(10)
+        const squareB = new Square_getset(20)
+        const squareC = new Square_getset(30)
+        console.log(`지금까지 생성된 인스턴스는 ${Square_getset.counter}개`) // 지금까지 생성된 인스턴스는 3개
+
+        console.log(`한 변의 길이는 ${squareA.length}입니다.`) // 한 변의 길이는 10입니다.
+        console.log(`한 변이 20인 정사각형의 둘레는 ${Square_getset.perimeterOf(20)}입니다.`) // 한 변이 20인 정사각형의 둘레는 80입니다.
+        console.log(`한 변이 100인 정사각형의 넓이는 ${Square_getset.areaOf(100)}입니다.`) // 한 변이 100인 정사각형의 넓이는 10000입니다.
+    
+        const squareE = new Square_getset(-10) // 예외 발생. Uncaught 길이는 0보다 커야 합니다.
+    </script>
+</html>
