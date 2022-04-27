@@ -15,11 +15,49 @@
     <div id="root"></div>
 
     <!-- react 사용하는 코드 -->
-    <script type="text/babel"> // react만의 확장된 JS문법을 사용하게 위해 > 바벨 라이브러리를 적용하겠다고 선언
-        const component = <h1>react basic</h1>
-        const container = document.getElementById('root') // 컴포넌트를 출력할 상자. root : 가장 최상위에 배치하는 컴포넌트
+    <!-- <script type="text/babel"> // react만의 확장된 JS문법을 사용하게 위해 > 바벨 라이브러리를 적용하겠다고 선언
+        class App extends React.Compoment {
+            render() {
+                return <div>
+                    <h1>{this.props.name}님 안녕하세요!</h1>
+                    <img src={this.props.imgUrl} />
+                </div>
+            }
+        }
 
-        ReactDOM.render(component, container) // 컴포넌트 출력 : 컴포넌트(h1)를 div#root에 출력
+        const container = document.getElementById('root') // 컴포넌트를 출력할 상자. root : 가장 최상위에 배치하는 컴포넌트
+        ReactDOM.render(<App name="구름" imgUrl="http://placedog.net/400/200" />, container) // 컴포넌트 출력 : App컴포넌트를 div#root에 출력
+    </script> -->
+    <script type="text/babel"> // react만의 확장된 JS문법을 사용하게 위해 > 바벨 라이브러리를 적용하겠다고 선언
+        class App extends React.Compoment {
+            constructor (props) {
+                super(props)
+                this.state = {
+                    time : new Date()
+                }
+            }
+            render () {
+                return <h1>{this.state.time.toLocaleTimeString()}</h1>
+            }
+
+            componentDidMount () {
+                this.timerId = setInterval(() => {
+                    this.setState({
+                        time : new Date()
+                    })
+                }, 1000)
+            }
+
+            componentWillMount () {
+                clearInterval(this.timerId)
+            }
+        }
+
+        // 출력하기
+        const container = document.getElementById('root')
+        ReactDOM.render(<App />, container)
+
+        
     </script>
 </body>
 </html>
