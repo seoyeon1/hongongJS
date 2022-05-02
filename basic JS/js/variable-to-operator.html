@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS 기초 정리 - 변수</title>
+</head>
+<body>
+    <h1>JS 기초 문법 정리</h1>
+    
+    <script>
+        // 변수 : var / let / const
+        var a = 100; // ES(ECMA Script)5 까지 사용. 변수명 재사용O, 값의 재할당O
+        a = '값의 재할당도 가능';
+        var JS는한글변수도가능 = 10000;
+        
+        console.log(a, JS는한글변수도가능);
+        let dat = 200; // 변수명 재사용X, 값의 재할당O. ES6 부터는 var 대신 let, const
+        const x = 3; // 변수명 재사용X, 값의 재할당X
+
+
+        // 기본 데이터 타입 : 숫자, 문자열, undefined, null, NaN, boolean(true, false)
+        var msg = "\"소화가 안돼\" 라고 내가 말했다.";
+        console.log(msg);
+        console.log(typeof(msg)); // string
+        var u;
+        console.log(typeof u); // undefined : 값을 할당하지 않았으므로
+        console.log(100 < 0); // false
+
+        var a = 100;
+        var b = a; // 기본데이터타입 - 값 자체를 복사. 이외의 데이터 타입 - 값을 참조(값은 따로 저장되어 있고 이 값이 저장된 주소를 저장)
+        a = 200; 
+        console.log(a, b); // 200 100 : a값이 바껴도 b에는 영향x
+
+
+        // 배열
+        var bb = '비'
+        var arr = [1, 2, 3, bb, 5];        
+        console.log(arr); // (5) [1, 2, 3, '비', 5]
+        console.log(arr[3]); // 비
+        console.log(arr.length); // 5
+        arr[3] = 'value0'; // 배열에 데이터 추가 - 1. 직접 위치 지정
+        arr.push('hahaha');  // 2. push() : 배열 맨 끝에 추가
+        console.log(arr); // (6) [1, 2, 3, 'value0', 5, 'hahaha']
+
+
+        // 연산자 - 산술연산자
+        var a = 100;
+        var b = 200;
+        console.log( a * b) ; // 20000
+        console.log( a / b) ; // 0.5
+
+        var msg1 = 'hello my name is ';
+        var msg2 = 'laura! age : ';
+        var age = 23;
+        console.log(msg1 + msg2 + age + '살'); // 문자열 덧셈(문+숫=문자열 취급). hello my name is laura! age : 23살
+
+        var one = 1;
+        one +=1; // one = one + 1; ++one; one++;
+
+        // 연산자 - 비교연산자
+        console.log( a <= b ); //true
+        console.log( a != b ); // true
+        var b = '100'; // 문자열 100
+        console.log( a == b ); // true. == : 자동형변환해서 값만 맞아도 T
+        console.log( a === b ); // false. === : 값, 타입까지 확인
+        console.log( a !== b ); // true
+
+        // 연산자 - 논리연산자 : && , ||, !
+        var c = 100;
+        var d = 200;
+        console.log( c != 100 && d >= 200 ); // false : 둘 다 T > T
+        console.log( c != 100 || d >= 200 ); // true : 둘 중 하나만 T > T
+        console.log(!true); // false ! : 부정 연산자
+        console.log(!!true); // true
+        console.log(!(100 > 200)); // true
+
+
+    </script>
+</body>
+</html>

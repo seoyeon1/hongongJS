@@ -1,0 +1,1 @@
+document.write('외부JS파일에서 작성한 내용이다.');

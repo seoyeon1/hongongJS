@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS 기초 정리</title>
+    <style>
+        body { font-size: 2rem;}
+    </style>
+    <script>
+        console.log(111); // JS작성방법1 : 직접 스크립트 작성
+        alert('명령문 끝에 세미콜론 권장한다고');
+
+        // 개발자 도구(console) : ctrl+shift+i
+        // 1라인 1명령
+        // <- 1줄 주석
+        /*
+        여러 줄 주석
+        주석은 친절하게 잘 달아주자
+        */
+        
+    </script>
+    <script src="js/ex0.js"> // 방법2 : 외부 파일 연결(권장) </script>
+</head>
+<body>
+    <!-- html 주석 -->
+    <p>hello</p>
+    <script>
+        console.log('스크립트가 바디 맨 밑에 위치도 가능.why? 브라우저가 html문서 로드할 때 위>아래 순으로 읽어냄. 1. 스크립트에서 바디 속 문서객체를 사용하는 내용이 있는데 스크립트가 위에 있다면 바디내용이 먼저 다 읽힐동안 기다려야하는 코드(로드 이벤트)가 필요. 하지만 바디밑에 위치한다면 이 코드가 필요없음. 2. 스크립트+바디내용이 다 읽혀야 온전한 페이지 일텐데 스크립트가 아직 안읽혀도 바디는 읽혔으므로 화면에 일단 뭐가 보이고 더 빨리 읽는 거 같은 느낌은 가능')
+    </script>
+</body>
+</html>
