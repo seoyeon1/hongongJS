@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 대문자로 통일
+
+            function solution(s){         
+                let answer="";
+                for(let x of s) { // 소문자 > 대문자 변환
+                    // [나의 풀이]
+                    x === x.toLowerCase() ? answer += x.toUpperCase() : answer += x;
+
+                    // [강의 풀이] - ascii
+                    let num = x.charCodeAt();
+                    if(num >= 97 && num <= 122) // 소문자라면
+                        answer += String.fromCharCode(num-32); // A와 a 아스키값 32차이. 아스키값 > 문자 변환
+                    else answer += x;
+                }
+                
+
+                return answer;
+
+            }
+
+            let str="ItisTimeToStudy";
+            console.log(solution(str));
+        </script>
+    </body>
+</html>

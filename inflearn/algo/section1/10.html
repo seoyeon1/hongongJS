@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 문자 찾기
+
+            // [나의 풀이]
+            function solution(s, t){
+                let answer=0;
+                let s_arr = s.split(''); // 문자열 속 문자들 > 문자배열
+    
+                answer = s_arr.filter((v) => v === t).length; // filter로 문자배열 속 해당 문자만 찾기
+                
+                // [강의 풀이]
+                for(let x of s) {
+                    if(x === t) answer++;
+                }
+
+                return answer;
+
+                // split(t)으로 문자를 기준으로 문자열 나누기
+                answer = s.split(t).length; // 찾는 문자가 문자열의 마지막에 있어도 split하면 공백이 원소로 들어가니까 상관X
+                return answer -1; // 문자를 기준으로 나눈 것이므로 길이-1 
+
+            }
+            
+            let str="COMPUTERPROGRAMMING";
+            console.log(solution(str, 'R'));
+        </script>
+    </body>
+</html>

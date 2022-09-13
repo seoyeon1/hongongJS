@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 최솟값 구하기
+
+            function solution(arr){         
+                let min = Number.MAX_SAFE_INTEGER; // 안정적으로 가장 큰 정수값으로 초기화
+                for(i of arr) {
+                    if (i < min) min = i;
+                }
+
+                // [강의 풀이]
+                // for (let i = 0; i < arr.length; i++) {
+                //     if (arr[i] < min) min = arr[i];
+                // }
+                
+                // [보충 학습] : 내장함수로 최댓값 구하기
+                // 전개 연산자(...) : 배열을 펼쳐주기(언패킹)
+                let max = Math.max(...arr);
+
+                // apply()
+                max = Math.max.apply(null, arr);
+
+                return min;
+
+            }
+
+            let arr=[5, 7, 1, 3, 2, 9, 11];
+            console.log(solution(arr));
+        </script>
+    </body>
+</html>

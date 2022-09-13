@@ -1,0 +1,23 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 세 수 중 최솟값 (정렬X)
+
+            function solution(a, b, c){
+                let answer = 0;
+                // if문 사용 : a, b 먼저 비교 > c와 비교
+                if (a<b) answer = a;
+                else  answer = b;
+                if (c < answer) answer = c;
+                
+                return answer;
+            }
+
+            console.log(solution(2, 5, 1));
+        </script>
+    </body>
+</html>

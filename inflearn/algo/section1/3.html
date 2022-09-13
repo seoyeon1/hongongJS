@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 연필 개수
+            
+            function solution(n){
+                // 3항 연산자 + parseInt()
+                let answer = n % 12 ? parseInt(n / 12 + 1) : parseInt(n / 12);
+                
+                // [강의 풀이] Math.ceil() : 소수점 올림
+                // let answer = Math.ceil(n / 12);
+                return answer;
+            }
+
+            console.log(solution(178));
+        </script>
+    </body>
+</html>
