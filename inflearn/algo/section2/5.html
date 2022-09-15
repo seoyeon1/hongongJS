@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 등수 구하기
+
+            function solution(arr){  
+                let answer =Array.from({length:arr.length}).fill(1); // 등수 기록 배열(1로 초기화)
+                // Array.from({length:arr.length}, ()=>1);
+
+                for(let i = 0; i < arr.length; i++) {
+                    for(let j = 0; j < arr.length; j++) { // 전체 원소를 비교하기 때문에 동점자 발생해도 문제 없음
+                        if(arr[i] < arr[j]) { // 자기보다 높은 점수가 몇 명있는지
+                            answer[i]++;
+                        }
+                    }
+                }
+                return answer;
+            }
+
+            let arr=[87, 89, 92, 100, 76];
+            console.log(solution(arr));
+        </script>
+    </body>
+</html>

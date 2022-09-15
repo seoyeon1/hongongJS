@@ -1,0 +1,49 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 봉우리
+
+            function solution(arr){  
+                let answer=0;
+                let n = arr.length;
+                // 방향 좌표(dx, dy) > 상,하,좌,우 탐색
+                let dx = [-1, 0, 1, 0];
+                let dy = [0, 1, 0, -1];
+
+                for(let i = 0; i < n; i++) {
+                    for(let j = 0; j < n; j++) { // 격자판 탐색
+                        let flag = 1; // 봉우리 : 1
+
+                        for(let k = 0; k < 4; k++) { // 상하좌우 체크
+                            let nx = i + dx[k];
+                            let ny = j + dy[k];
+
+                            // 범위에 벗어나지 않는지 & 봉우리 판단 > 봉우리 X > flag : 0, 탈출
+                            if (0<=nx && nx<n && 0<=ny && ny< n && arr[i][j] <= arr[nx][ny]) { 
+                                flag = 0;
+                                break;
+                            }
+                        }   
+                        // 봉우리 O > 개수 증가
+                        if(flag) answer++;
+                        
+                    }
+                }
+                  
+                  
+                return answer;
+            }
+
+            let arr=[[5, 3, 7, 2, 3], // n x n 격자판(원소 : 각 지역의 높이)
+                     [3, 7, 1, 6, 1],
+                     [7, 2, 5, 3, 4],
+                     [4, 3, 6, 4, 1],
+                     [8, 7, 3, 5, 2]];
+            console.log(solution(arr)); // 10
+        </script>
+    </body>
+</html>

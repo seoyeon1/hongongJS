@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 보이는 학생
+
+            function solution(arr){         
+                let answer = 1, max = arr[0]; // 첫번째 사람은 무조건 보이니까 최대값은 첫번째로 초기화, 2번째 부터 체크
+                
+                for (let p= 1; p < arr.length; p++) {
+                    if (arr[p] > max) { // p번째 사람이 자기 앞에서 가장 큰 사람보다 더 크다면
+                        answer++;
+                        max = arr[p];
+                    }
+                }
+                
+                return answer;
+            }
+
+            let arr=[130, 135, 148, 140, 145, 150, 150, 153];
+            console.log(solution(arr));
+        </script>
+    </body>
+</html>
