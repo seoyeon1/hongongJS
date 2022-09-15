@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 가운데 문자 출력
+
+            function solution(s){  
+                // [나의 풀이 ]- .substr(idx부터, 몇개)
+                let mid = Math.floor(s.length/2)
+                let answer = s.length%2 == 1 ? s[mid] : s.substr(mid-1, 2);
+                
+                return answer;
+
+                // [강의 풀이] - 문자열 자르기 : .substring(idx부터, 전까지)
+                if (s.length == 1) answer = s.substring(mid, mid+1); // 홀수 : mid <= 범위 <mid+1
+                else answer = s.substring(mid-1, mid+1); // 짝수
+                return answer;
+
+            }
+            console.log(solution("ssts"));
+        </script>
+    </body>
+</html>

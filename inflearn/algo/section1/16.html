@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 중복문자 제거
+
+            function solution(s){  
+                // [나의 풀이] - s.indexOf(v,시작위치):문자열(s)에서 v가 첫번째 등장한 위치 리턴
+                // 중복문자 제거 : filter로 문자열을 순회하면서 해당 문자가 처음으로 등장하는 것만 남겨두기
+                let answer= [...s].filter((v, i)=> s.indexOf(v)===i).join(''); 
+                
+                // [강의 풀이]
+                answer = '';
+                for (let i = 0; i <s.length; i++){
+                    console.log(s[i], i, s.indexOf(s[i])); // k 0 0
+                    if(s.indexOf(s[i])===i) // 문자의 첫 등장 위치 === 현재 인덱스 
+                        answer += s[i];
+                }
+
+                // [보충] - 문자열 속 문자(k)의 개수
+                function sol(s) {
+                    let cnt = 0;
+                    let pos = s.indexOf('k');
+                    while(pos !== -1) {
+                        answer++;
+                        pos = s.indexOf('k', pos+1); // 찾은 위치 다음 위치부터 다시 탐색
+                    }
+
+                    return cnt;
+                }
+
+
+                return answer;
+            }
+            console.log(solution("ksekkset")); // kset
+        </script>
+    </body>
+</html>
