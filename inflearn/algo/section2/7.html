@@ -47,3 +47,19 @@
         </script>
     </body>
 </html>
+
+
+<!-- <script>
+    // 방향좌표 대신 3항 연산자도 가능
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            c = arr[i][j]; //현재위치
+            u = (i - 1 < 0) ? 0 : arr[i - 1][j]; //위
+            r = (j + 1 >= n) ? 0 : arr[i][j + 1]; //오른쪽
+            d = (i + 1 >= n) ? 0 : arr[i + 1][j]; //아래
+            l = (j - 1 < 0) ? 0 : arr[i][j - 1]; //왼쪽
+
+            if (c > u && c > r && c > d && c > l) answer++;
+        }
+    }
+</script> -->

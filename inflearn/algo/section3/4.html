@@ -1,0 +1,43 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 문자거리
+            // 문자열을 앞에서부터, 끝에서부터 탐색, 거리 기록 > 두 기록 중 짧은 거리 선택
+
+            function solution(s, t){
+                let answer=[]; // 기준 문자(t)와의 거리 저장
+                let P = 1000; // 문자열을 탐색하면서 P++, 기준 문자를 만나면 0 초기화
+                for (let i of s) { // 앞부터 탐색
+                    if(i === t) {
+                        P = 0;
+                    }
+                    else {
+                        P++;
+                    }
+                    answer.push(P);
+                }
+                console.log(answer);
+
+                P = 1000;
+                for(let j = s.length-1; j >= 0; j--) { // 끝부터 탐색
+                    if(s[j] !== t) {
+                        P++;
+                        answer[j] = Math.min(answer[j], P);
+                    }
+                    else P = 0;
+                }
+                console.log(answer);
+                
+                
+                return answer;
+            }
+            
+            let str="teachermode";
+            console.log(solution(str, 'e'));
+        </script>
+    </body>
+</html>

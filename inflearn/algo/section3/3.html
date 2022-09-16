@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 숫자만 추출
+
+            // [나의 풀이] - 정규식, replace()
+            function solution(str){
+                
+                let answer= str.replace(/[^0-9]/g,''); // 문자열 속 숫자만 남기기
+                return +answer; // 문자형 숫자 > 숫자
+            }
+
+
+            // [강의 풀이] - isNaN(s) : 문자(s)가 숫자가 아닌지(not a number)
+            function solution2(str){
+                let answer = '';
+                for(let x of str){
+                    if(!isNaN(x)) answer += x;
+                }
+                return parseInt(answer);
+            }
+            
+            let str="g0en2T0s8eSoft";
+            console.log(solution(str));
+        </script>
+    </body>
+</html>
