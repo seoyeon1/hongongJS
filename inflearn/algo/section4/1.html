@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 자릿수의 합
+            function solution(n, arr){
+                let answer, max=Number.MIN_SAFE_INTEGER;
+
+                for(let x of arr){
+                    let sum=0, tmp=x;
+                    // 방법2 - reduce 사용
+                    sum = x.toString().split('').reduce((a,b)=> a+Number(b), 0);
+                    
+                    // 방법1 - while문
+                    while(tmp){ // 요소(숫자)에 대해 자릿수의 합 계산
+                        sum += (tmp % 10);
+                        tmp = Math.floor(tmp / 10);
+                    }
+                    // 자릿수 합니 최대인 정수 업데이트
+                    if(sum>max){
+                        max=sum;
+                        answer=x;
+                    }
+                    else if(sum===max){
+                        if(x>answer) answer=x;
+                    }
+                }
+                return answer;
+            }
+            
+            let arr=[128, 460, 603, 40, 521, 137, 123];
+            console.log(solution(7, arr));
+        </script>
+    </body>
+</html>
