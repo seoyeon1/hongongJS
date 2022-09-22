@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 두 배열 합치기
+
+            function solution(arr1, arr2){ // 오름차순 배열 2개
+                let answer=[];
+                // [나의 풀이] - 언패킹, 정렬
+                answer.push(...arr1);
+                answer.push(...arr2);
+                answer.sort((a, b)=>a - b);
+
+                // [강의 풀이]
+                
+                return answer;
+            }
+            
+            let a=[1, 3, 5]; 
+            let b=[2, 3, 6, 7, 9];
+            console.log(solution(a, b));
+        </script>
+    </body>
+</html>

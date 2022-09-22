@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 연속 부분수열 1
+
+            function solution(m, arr){
+                let answer=0, lt=0, sum=0; // 투 포인터(lt, rt) : 합이 m보다 작으면 rt 증가, 같거나 크면 lt 증가, 기존 lt값 빼기(rt가 배열 끝에 도착할 때 까지)
+                
+                for(let rt = 0; rt<arr.length; rt++){ // !포인터 이동 코드
+                    sum += arr[rt];
+
+                    if(sum === m) answer++;
+                        
+                    while (sum >= m) { // m 이하가 될 때 까지 총합에서 lt 값을 제외, lt 이동
+                        sum -= arr[lt++];
+                        if(sum === m) answer++;
+                    }
+                    
+                }
+                return answer;
+            }
+            
+            let a=[1, 2, 1, 3, 1, 1, 1, 2];
+            console.log(solution(6, a));
+        </script>
+    </body>
+</html>

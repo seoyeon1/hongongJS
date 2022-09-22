@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 최대 매출 -  슬라이딩 윈도우
+
+            function solution(k, arr){ 
+                // [나의 풀이]
+                let answer = Number.MIN_SAFE_INTEGER, sum = 0;
+
+                for(let i = 0; i < arr.length - 2; i++){ 
+                    sum = arr[i]+arr[i+1]+arr[i+2];
+                    if(sum > answer) answer = sum;
+                }
+                
+
+                // [강의 풀이] - sum +(더해질칸값-첫번째칸값) 이렇게 밀고가면서 최대 매출액 계산
+                answer = sum =0;
+
+                for(let i = 0; i < k; i++) sum += arr[i]; // 시작
+                answer = sum;
+
+                for(let i = k; i< arr.length; i++){ // 슬라이딩 : sum, max 업데이트
+                    sum += (arr[i]-arr[i-k]);
+                    answer = Math.max(sum, answer);
+                }
+
+                // [추가] - 투 포인터 활용
+                let max = count  = lt= 0;
+
+                for (let rt = 0; rt < arr.length; rt++) {
+                sum += arr[rt];
+                count++;
+
+                if (answer < sum) answer = sum;
+
+                while (count === k) {
+                sum -= arr[lt++];
+                count -= 1;
+                }
+            } 
+
+            return answer;
+            }
+            
+            let a=[12, 15, 11, 20, 25, 10, 20, 19, 13, 15];
+            console.log(solution(3, a));
+        </script>
+    </body>
+</html>
