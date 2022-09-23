@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 학급 회장 - 해쉬 (Map() 사용) : has(), set(), get()
+
+            function solution(s){  
+                let answer = 0;
+                let sh = new Map(); // 해쉬로 사용될 맵 객체 생성(key : value쌍으로 구성)
+
+                for(let v of s){// 각 후보 기호를 key로 사용
+
+                    if(sh.has(v)) sh.set(v, sh.get(v)+1); // 기존에 키 존재함 > 각 후보의 표가 나올 때마다 카운팅
+                    
+                    else sh.set(v, 1); // 기존에 키 없음 > 해쉬맵에 후보 등록
+                    console.log(sh);
+                }
+                // {'B' => 3, 'A' => 3, 'C' => 5, 'D' => 2, 'E' => 2}
+                
+                // 최댓값 찾기
+                let max = Number.MIN_SAFE_INTEGER;
+                for(let [key, val] of sh){
+                    if(val > max) {
+                        max = val;
+                        answer = key;
+                    }
+                }
+                return answer;
+            }
+
+            let str="BACBACCACCBDEDE";
+            console.log(solution(str)); // C
+        </script>
+    </body>
+</html>
