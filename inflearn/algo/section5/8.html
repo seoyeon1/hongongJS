@@ -7,35 +7,40 @@
         <script>
             // 모든 아나그램 찾기 - 해쉬, 투포인터, 슬라이딩 윈도우
 
-            function compareMaps(map1, map2){
-                if(map1.size!== map2.size) return false;
+            function compareMaps(map1, map2){ // 해쉬맵 길이, 키 존재 & 해당 키 개수가 같은지 체크
+                if(map1.size!== map2.size) return false; 
+                for(let [key, val] of map1){
+                    if(!map2.has(key) || map2.get(key) !== val) return false;
+                }
                 return true;
+                
             }
             function solution(s, t){ // 문자열 s에서 t와 아나그램이 되는 부분 문자열 개수 찾기
                 let answer = 0;
                 // sH에 rt값 추가 > sH, tH 비교(함수 : .size(), 원소 비교) > 기존 lt 키 삭제(delete), lt 이동, rt 추가(슬라이딩) > s 끝까지 반복
-                let tH = new Map();
+                let tH = new Map(); 
                 let sH = new Map();
 
-                for(let x of t){
+                for(let x of t){ // tH 초기화. t(패턴)의 문자 구성 계산
                     if(tH.has(x)) tH.set(x, tH.get(x)+1);
                     else tH.set(x, 1);
                 }
 
-                let len = t.length -1;
-                for(let i = 0; i < len; i++){
+                let len = t.length -1; // 길이의 마지막 값(rt)은 투포인터+슬라이딩 윈도우를 통해 추가 예정 
+                for(let i = 0; i < len; i++){ // sH 초기화
                     if(sH.has(s[i])) sH.set(s[i], sH.get(s[i])+1);
                     else sH.set(s[i], 1);
                 }
 
+                // 투 포인터(lt, rt) + 슬라이딩 윈도우 : 맵에 rt 추가 > 맵 비교 > 기존 lt 값 제거, 이동 > rt 이동 (s 끝까지 반복)
                 let lt = 0;
-                for(let rt = len; rt < s.length; rt++) { // rt 값 추가
+                for(let rt = len; rt < s.length; rt++) { // sH에 rt 값 추가
                     if(sH.has(s[rt])) sH.set(s[rt], sH.get(s[rt])+1);
                     else sH.set(s[rt], 1);
 
                     if(compareMaps(sH, tH)) answer++; // 두 맵 비교
                     sH.set(s[lt], sH.get(s[lt])-1);
-                    if(sH.get(s[lt])=== 0) sH.delete(s[lt]); // 기존 lt 값 제거
+                    if(sH.get(s[lt])=== 0) sH.delete(s[lt]); // 기존 lt 값 제거 > 맵에서 해당 키(lt)의 값이 없다면 키 삭제 > lt 이동
                     lt++;
                 }
                 return answer;
@@ -43,7 +48,7 @@
             
             let a="bacaAacba";
             let b="abc";
-            console.log(solution(a, b));
+            console.log(solution(a, b)); // 3
         </script>
     </body>
 </html>

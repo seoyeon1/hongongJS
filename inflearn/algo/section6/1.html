@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 올바른 괄호 - 스택 : LIFO
+
+            function solution(s){
+                let answer="YES";
+                let stack = [];
+
+                // [나의 풀이] - ( : push() / ) : pop()
+                for(let t of s){
+                    if (t === '(')
+                        stack.push(t);
+                    else {
+                        if (!stack.length) return 'NO'; // 닫는 괄호에 맞는 여는 괄호가 없다면 > 잘못된 괄호
+                        stack.pop();
+                    }
+                }
+                console.log(stack); // 올바른 괄호 : 최종 스택 빈 상태
+
+                if(stack.length) return 'NO';
+                return answer;
+            }
+            
+            let a="(()(()))(()";
+            console.log(solution(a)); // NO
+        </script>
+    </body>
+</html>

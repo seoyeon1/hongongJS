@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 괄호 문자 제거
+
+            function solution(s){  
+                let answer;
+                let stack=[];
+                for(let i of s){
+                    if(i !== ')') // 닫는 괄호가 아니면 스택에 push
+                        stack.push(i);
+                    else // 자신의 짝인 여는 괄호가 나올 때까지 pop
+                        while(stack.pop() !== '('); 
+                }
+                answer = stack.join(''); // 스택 속 남은 문자들은 문자열로 변환
+                
+                return answer;
+            }
+
+            let str="(A(BC)D)EF(G(H)(IJ)K)LM(N)";
+            console.log(solution(str)); // EFLM
+        </script>
+    </body>
+</html>
