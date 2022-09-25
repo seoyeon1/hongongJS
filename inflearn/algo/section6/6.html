@@ -1,0 +1,26 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 공주 구하기 - 큐 : FIFO
+            
+            function solution(n, k){
+                let answer;
+                let queue = Array.from({length : n}, (v, i)=> i+1); // 배열 객체로 큐 표현
+                while(queue.length) {// 매 반복 기준, 큐에서 n번째 왕자 출력
+                    for(let i = 1; i<k; i++){
+                        queue.push(queue.shift());
+                        if(queue.length === 1) answer = queue.shift();
+                    }
+                }
+                  
+                return answer;
+            }
+
+            console.log(solution(8, 3));
+        </script>
+    </body>
+</html>

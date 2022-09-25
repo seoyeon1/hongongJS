@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 쇠막대기 - 스택
+
+            function solution(s){ // 괄호 문제 > 스택으로 접근해보자!
+                let answer=0;
+                let stack=[]; // ( : 스택에 푸시
+
+                // i번째에서 )가 나왔을 때 그 이전 값이 ( : 레이저 > (레이저에 해당하는 '(' 1개 제거 후) answer + 스택 길이
+                // ) : 막대기의 끝 > 스택에서 레이저 pop하고 answer + 1
+                for (let x = 0; x < s.length; x++) {
+                    if (s[x] === '(') stack.push(s[x]);
+                    else {
+                        stack.pop(); // 레이저 제외 후,
+
+                        if(s[x-1] === '(') answer += stack.length;
+                        else answer += 1;
+                    }
+                }                          
+                return answer;
+            }
+            
+            let a="()(((()())(())()))(())";
+            console.log(solution(a)); // 17
+        </script>
+    </body>
+</html>
