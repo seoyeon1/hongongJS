@@ -1,0 +1,29 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 선택 정렬
+
+            function solution(arr){
+                let answer=arr;
+
+                // [나의 풀이]
+                for (let i = 0; i < arr.length-1; i++){
+
+                    for(let j = i+1; j < arr.length; j++){ // i를 기준, i 위치 이후의 값 중에 작은 값을 발견 > 교환
+                        if(arr[i] > arr[j]) [arr[i], arr[j]] = [arr[j], arr[i]];
+                        console.log(answer);
+                       
+                    }
+                }
+                return answer.join(' ');
+            }
+
+            let arr=[13, 5, 11, 7, 23, 15];
+            console.log(solution(arr));
+        </script>
+    </body>
+</html>

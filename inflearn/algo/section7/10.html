@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 이분 검색 : 시간복잡도 O(logn)
+            // 정렬된 자료 대상, lt & rt 포인터 필요
+            // 타겟이 mid인지/큰지/작은지 > 검색 범위 줄여가기
+
+            function solution(target, arr){
+                let answer;
+
+                // [나의 풀이] - indexOf() : 시간복잡도 O(n) (= 순차탐색 시간복잡도)
+                arr.sort((a, b)=> a-b); // 오름차순
+                console.log(arr);
+
+                answer = arr.indexOf(target) + 1;
+                
+
+                // [강의 풀이] - 이분 검색
+                arr.sort((a, b)=> a-b); // 정렬된 자료일 때만 가능
+                let lt = 0, rt = arr.length-1;
+
+                while(lt <= rt){                
+                    let mid = parseInt((lt+rt)/2); // 범위의 중앙값(정수)
+
+                    if(arr[mid] === target) {
+                        answer = mid + 1;
+                        break;
+                    }
+                    else if (arr[mid] > target) rt = mid -1;
+                    else lt = mid + 1;
+
+                }
+               
+                return answer;
+            }
+
+            let arr=[23, 87, 65, 12, 57, 32, 99, 81];
+            console.log(solution(32, arr)); // 3
+        </script>
+    </body>
+</html>

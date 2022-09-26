@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 장난꾸러기 현수
+
+            function solution(arr){
+
+                // [나의 풀이]
+                let answer = [], real=[...arr].sort((a, b)=> a-b); // 실제 키 순서
+                
+                // [강의 풀이] - sice() : if 복사할 배열에 배열이 원소로 들어있는 경우, 얕은 복사가 됨
+                real = arr.slice().sort(); // 배열 복제(숫자 정렬할 때는 sort() 주의)
+                console.log(arr, real)
+
+                for(let i = 0; i < arr.length; i++){ // 현재 위치와 실제 키 순서가 다른 경우(현수 & 짝꿍)
+                    if(arr[i] !== real[i]) answer.push(i+1);
+                }
+
+                return answer;
+            }
+
+            let arr=[120, 125, 152, 130, 135, 135, 143, 127, 160];
+            console.log(solution(arr));
+        </script>
+    </body>
+</html>

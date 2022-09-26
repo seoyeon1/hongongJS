@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 회의실 배정 - 그리디
+            // 어떻게 하면 회의실을 최대한으로 이용할 수 있을까
+            // 정렬 기준? 시작시간, 회의시간 X / 끝나는 시간 O
+            // if 끝나는 시간이 같은 회의가 여러 개 > 시작 시간으로 정렬
+
+            // 조건 : 정렬 후, i번 회의 끝나는 시간 <= i+1번 회의 시작 시간
+            
+
+            function solution(meeting){ 
+                let answer= et = 0;
+                meeting.sort((a, b) => { // 회의 정보 정렬
+                    if(a[1] === b[1]) return a[0] - b[0]; 
+                    else return a[1] - b[1];
+                }); 
+                console.log(meeting);
+
+                for(let m of meeting){
+                    if(et <= m[0]) {
+                        answer++;
+                        et = m[1]; // 진행한 회의의 끝나는 시간으로 업데이트
+                    }
+                }
+                
+                
+                return answer;
+            }
+
+            let arr=[[1, 4], [2, 3], [3, 5], [4, 6], [5, 7]];
+            console.log(solution(arr)); // 3
+        </script>
+    </body>
+</html>

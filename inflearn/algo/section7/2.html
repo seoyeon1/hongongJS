@@ -1,0 +1,27 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 버블 정렬 : 정렬 대상에서 가장 큰 원소부터 차례로 정렬
+
+            function solution(arr){
+                let answer=arr;
+                
+                for (let i = 0; i < arr.length-1; i++){ // 반복문i 1회차가 끝나면 당시 가장 큰 원소가 정렬됨 
+                    for (let j = 0; j < arr.length-i-1; j++){ // > 다음 반복문j를 수행할 땐 마지막 원소를 제외시키고 정렬해야 함
+                        if(arr[j] > arr[j+1]) [arr[j], arr[j+1]] = [arr[j+1], arr[j]];
+                    }
+                    console.log(i+ '회차 버블 정렬: '+ answer);
+                }
+                
+                return answer;
+            }
+
+            let arr=[13, 11, 7, 23, 5];
+            console.log(solution(arr));
+        </script>
+    </body>
+</html>
