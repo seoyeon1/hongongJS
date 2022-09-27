@@ -1,0 +1,61 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // LRU (카카오)
+
+            function solution(size, arr){ 
+                
+                // 방법1 : 삽입 정렬 활용
+                let answer=Array.from({length:size}, ()=>0);
+                
+                arr.forEach(x => {
+                    let pos = -1;
+
+                    for(let i = 0; i < size; i++) if(x=== answer[i]) pos = i; // 캐쉬 메모리를 탐색 중 x가 존재하는지
+                    
+                    if(pos === -1){ // 미스일 때
+                        for(let i = size -1; i >= 1; i--){
+                            answer[i] = answer[i-1]; // 값을 뒤로 땡기기
+                        }
+
+                    }
+                    else { // 히트일 때
+                        for(let i = pos; i >= 1; i--){
+                            answer[i] = answer[i-1]; // 히트난 지점부터 땡기기
+                        }  
+                    }
+                    answer[0] = x;
+
+                });
+
+                return answer; 
+
+                
+                // 방법2 : 배열 내장함수 활용
+                arr.forEach(x => {
+                    let pos=-1;
+                    for(let i=0; i<size; i++) if(x===answer[i]) pos=i;
+
+                    if(pos===-1){ // 미스일 때, unshift()로 배열 앞에 삽입
+                       answer.unshift(x);
+                       if(answer.length>size) answer.pop(); // unshift할 때 값들이 밀려나는데 사이즈보다 커지지 않도록
+                    }
+                    else{ // 히트일 때, 그 때의 값을 지우고 맨 앞에 삽입
+                       answer.splice(pos, 1);
+                       answer.unshift(x);
+                    } 
+                   
+                });
+
+                return answer;
+            }
+
+            let arr1=[1, 2, 3, 2, 6, 2, 3, 5, 7];
+            console.log(solution(5, arr1)); // 7 5 3 2 6
+        </script>
+    </body>
+</html>

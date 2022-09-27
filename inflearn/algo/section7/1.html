@@ -5,19 +5,30 @@
     </head>
     <body>
         <script>
-            // 선택 정렬
+            // 선택 정렬 : 주어진 값 중에 최솟값 찾기 > 맨 앞에 값과 교환 > 맨 앞을 제외한 나머지를 대상으로 이 과정을 반복
+            // n번 째 반복이 끝날 때마다 앞에서 n번 째 값이 정해됨
+            // 시간 복잡도 : O(n^2) - 정렬이 하나도X <> O(n^2) - 이미 정렬이 된 경우, 매번 각 자리에 올 최솟값을 찾아야하니까
 
             function solution(arr){
-                let answer=arr;
+                let answer=arr; // 얕은 복사
 
-                // [나의 풀이]
+                
                 for (let i = 0; i < arr.length-1; i++){
 
-                    for(let j = i+1; j < arr.length; j++){ // i를 기준, i 위치 이후의 값 중에 작은 값을 발견 > 교환
+                    // [나의 풀이]
+                    for(let j = i+1; j < arr.length; j++){ // i를 기준, i 위치 이후의 값 중에 작은 값을 발견 > i와 교환
                         if(arr[i] > arr[j]) [arr[i], arr[j]] = [arr[j], arr[i]];
                         console.log(answer);
                        
                     }
+
+                    
+                    // [강의 풀이]
+                    let idx = i; // 최솟값의 위치 저장
+                    for(let j = i+1; j < arr.length; j++){
+                        if (arr[idx] > arr[j]) idx = j;
+                    }
+                    [arr[i], arr[idx]] = [arr[idx], arr[i]];
                 }
                 return answer.join(' ');
             }

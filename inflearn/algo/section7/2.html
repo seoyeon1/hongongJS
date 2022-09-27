@@ -5,13 +5,15 @@
     </head>
     <body>
         <script>
-            // 버블 정렬 : 정렬 대상에서 가장 큰 원소부터 차례로 정렬
+            // 버블 정렬 : 이웃한 데이터끼리(j, j+1) 비교 > 큰 값이 오른쪽 위치하도록 > 가장 큰 원소부터 큰 순서대로 차례대로 정렬
+            // n번 째 정렬 완료 > 뒤에서 n번째 자리의 수가 확정됨
+            // 시간 복잡도 : O(n^2) <> 이미 정렬된 경우, O(n)
 
             function solution(arr){
                 let answer=arr;
                 
-                for (let i = 0; i < arr.length-1; i++){ // 반복문i 1회차가 끝나면 당시 가장 큰 원소가 정렬됨 
-                    for (let j = 0; j < arr.length-i-1; j++){ // > 다음 반복문j를 수행할 땐 마지막 원소를 제외시키고 정렬해야 함
+                for (let i = 0; i < arr.length-1; i++){ // 반복문i 1회차가 끝나면 당시에 가장 큰 값이 정렬됨 
+                    for (let j = 0; j < arr.length-i-1; j++){ // > 다음 반복문j를 수행할 정렬된 원소를 제외시키고 정렬해야 함
                         if(arr[j] > arr[j+1]) [arr[j], arr[j+1]] = [arr[j+1], arr[j]];
                     }
                     console.log(i+ '회차 버블 정렬: '+ answer);
