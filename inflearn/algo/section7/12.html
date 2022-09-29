@@ -1,0 +1,41 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 마구간 정하기 (결정 알고리즘)
+            function count(stable, dist){
+               let cnt = 1; ep = stable[0]; // ep : 마지막으로 말을 넣은 마구간 위치
+               for(let i = 1; i < stable.length; i++){
+                if(stable[i]-ep >= dist){ // 해당 마구간에 말을 배치 가능한지
+                    cnt++;
+                    ep = stable[i];
+                    }
+                }
+               return cnt;
+            }
+            function solution(c, stable){ // 이분 검색 이용
+                let answer;
+                stable.sort((a,b)=> a-b); // 마구간 좌표 정렬
+                let lt = 1;
+                let rt = stable[stable.length-1];
+                
+                while(lt <= rt){
+                    let mid = parseInt((lt+rt)/2); // 5부터 시작
+                    if(count(stable,mid) >= c){
+                        answer = mid;
+                        lt = mid+1;
+                    }
+                    else rt = mid-1;
+                }
+                return answer;
+            }
+
+            let arr=[1, 2, 8, 4, 9];
+            console.log(solution(3, arr)); // 3
+        </script>
+    </body>
+</html>
+

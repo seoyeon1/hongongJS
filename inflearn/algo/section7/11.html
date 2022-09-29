@@ -5,19 +5,41 @@
     </head>
     <body>
         <script>
-            // 뮤직 비디오 - 이분 검색
+            // 뮤직 비디오 - 결정 알고리즘 (이분 검색)
             // dvd 최소 용량(lt) : 9 ~ 최대 용량(rt) : 45
-            // mid = 9+45 / 2 = 27분씩 > 최대로 다 채우면 1~6, 7~9 2장으로 가능 > 3장으로 나눠도 가능
-            // mid = 17 > 1~5, 6~7, 8~9 3장 가능
-            // rt = 16 mid 계산 > ... lt > rt 까지 반복
-            function count(songs, capacity) {
+            // mid = 9+45 / 2 = 27분씩 > 최대로 다 채우면 1~6, 7~9 > 2장으로도 가능
+            // mid = 17 > 1~5, 6~7, 8~9 > 3장 가능
+            // rt/rt/mid 조정하면서 lt <= rt 까지 반복
 
+            function count(songs, capacity) { // 한도가 정해졌을 때 필요한 최소 dvd 개수 계산
+                let cnt = 1, sum = 0;
+                for(let s of songs){
+                    if(sum+s <= capacity) sum += s; // 추가해도 한도를 벗어나지 않는지
+                    else {
+                        cnt++;
+                        sum = s;
+                    }
+                }
+                return cnt;
+                
             }
             
-            function solution(m, songs){ 
+            function solution(m, songs){
                 let answer;
-                let lt = Math.max(...song);
-                
+                let lt = Math.max(...songs); // dvd 최소 용량
+                let rt = songs.reduce((a, b)=>a+b, 0); // 최대 용량
+
+                while(lt <= rt){ // 이분 검색
+                    let mid = parseInt((lt+rt)/2);
+                    if (count(songs, mid) <= m) {
+                        answer = mid;
+                        rt--;
+                    }
+                    else{ // 목표한 dvd 개수를 못맞추고 넘어버렸을 때
+                        lt = mid+1;
+                    }
+                }
+
                 
                 return answer;
             }
