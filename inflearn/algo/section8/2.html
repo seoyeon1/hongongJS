@@ -1,0 +1,28 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 재귀함수를 이용한 이진수 출력
+
+            function solution(n){
+                let answer="";
+                
+                function toBin(i){ // 10진수 > 2진수 변환
+                    if(i===0) return;
+                    else{
+                        toBin(parseInt(i/2));
+                        answer += i%2;
+                    }
+                }
+                toBin(n);
+
+                return answer;
+            }
+
+            console.log(solution(11)); // 1011
+        </script>
+    </body>
+</html>
