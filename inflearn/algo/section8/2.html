@@ -11,7 +11,8 @@
                 let answer="";
                 
                 function toBin(i){ // 10진수 > 2진수 변환
-                    if(i===0) return;
+                    // 몫이 0이 될때까지 나누면서 그때의 나머지를 거꾸로 출력
+                    if(i===0) return; // 재귀 종료 조건
                     else{
                         toBin(parseInt(i/2));
                         answer += i%2;
