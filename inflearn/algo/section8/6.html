@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 바둑이 승차 - 이진트리 DFS
+            // [목표] 트럭에 태울 수 있는 최대 무게 구하기 > 부분집합 문제
+            // 각 마리에 대해 2가지 조건(태운다/태우지 않는다)이 주어짐 > 이진트리, if~else로 풀기
+
+            function solution(c, arr){ // 기준 무게, 바둑이들 수
+                let answer = Number.MIN_SAFE_INTEGER; // 태울 수 있는 최대 무게
+                
+                function DFS(L, sum){
+                    if(sum > c) return; // 기준 무게를 초과 > 인정 X
+                    if(L === arr.length){ 
+                        if(sum > answer) answer = sum; // Math.max(answer, sum);
+                    }
+                    else{ 
+                        DFS(L+1, sum+arr[L]); // 해당 바둑이를 트럭에 태운다
+                        DFS(L+1, sum); // 트럭에 태우지 않는다
+                    }
+                                  
+                }
+                DFS(0, 0);
+                return answer;
+            }
+
+            let arr=[81, 58, 42, 33, 61];
+            console.log(solution(259, arr)); // 242
+        </script>
+    </body>
+</html>
