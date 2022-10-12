@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 순열 구하기
+            // [a,b] !== [b, a](중복을 허용 X), n개에서 m개를 뽑기
+
+            function solution(m, arr){         
+                let answer=[];
+                let n = arr.length;
+                let check = Array.from({length:n}, ()=>0); // 부분집합에 해당 숫자를 사용했는지 확인용 배열
+                let tmp = Array.from({length:m}, ()=>0); // 부분집합용 배열
+                
+                function DFS(L){
+                    if(L === m) answer.push(tmp.slice()); // 경우의 수(부분집합) 추가
+                    else {
+                        for(let i = 0; i < n; i++){ // 부분집합 만들기
+                            if(check[i] === 0){ // 원소가 부분집합에 사용되지 않았다면 > 부분집합(tmp)에 사용 & check에 사용표시(1)
+                                check[i] = 1;
+                                tmp[L] = arr[i];
+                                DFS(L+1);
+                                check[i] = 0; // 체크한 것을 다시 풀어주기
+                            }
+                        }
+                    }
+                }
+                DFS(0);
+                return answer;
+            }
+
+            let arr=[3, 6, 9];
+            console.log(solution(2, arr)); // 6
+        </script>
+    </body>
+</html>

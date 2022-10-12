@@ -5,20 +5,21 @@
     </head>
     <body>
         <script>
+            // 최대점수 구하기 - DFS : 이진트리 부분집합 문제
+
             function solution(m, ps, pt){ // 기준이 되는 최대 점수, 문제 점수 배열, 소요 시간 배열
-                // 최대점수 구하기 - DFS
 
                 let answer=Number.MIN_SAFE_INTEGER; // N개의 문제들로 얻을 수 있는 최대점수
 
                 function DFS(L, sum, time){
-                    if(time > m) return; // 제한시간을 초과 > 인정 X
+                    if(time > m) return; // 제한시간을 초과 > 부분집합 인정 X
 
                     if(L === ps.length){ // 부분집합 완성
                         answer=Math.max(answer, sum);
                     }
-                    else{
+                    else{ // 선택(갈림길) 추가
                         DFS(L+1, sum + ps[L], time + pt[L]); // 해당 문제를 풀었을 때
-                        DFS(L+1, sum, time); // 풀지 못했을 때
+                        DFS(L+1, sum, time); // 풀지 않았을 때
                     }   
                 }
 

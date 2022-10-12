@@ -1,0 +1,34 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 중복 순열 구하기 - DFS 재귀(트리 그림을 생각하면 쉬움)
+            // 다중 for문이 아닌 재귀를 쓴 이유? : 둘 다 m중 for문이지만 다중 for문은 레벨(m)이 증가할 때 for문이 추가로 필요해지면서 m값에 따라 코드를 변경해야 함
+            // 재귀는 m값과 상관없이 코드의 변경을 필요로 하지 않음
+
+            function solution(n, m){
+                let answer=[];
+                let tmp = Array.from({length:m}, ()=> 0); // m개씩 뽑는 부분집합 배열(0초기화)
+                
+                function DFS(L){ // m개를 뽑을 때(부분집합)마다 n개의 선택지가 존재
+                if(L === m){ // 부분집합(경우의 수) 1개 완성 > 정답에 추가
+                    answer.push(tmp.slice()); // 얕은 복사(주소 복사)가 되지 않게 slice로 값 복사
+                }
+                else{
+                    for(let i = 1; i <= n; i++) { // DFS : n가지 선택지 탐색 > tmp[L]에 추가 > 부분집합 완성
+                        tmp[L] = i;
+                        DFS(L+1); // 다음 레벨로 이동
+                    }
+                }
+            }
+                DFS(0); // 공을 1개씩 뽑을 때마다 레벨이 증가 > DFS(0) ~ DFS(m-1)
+                return answer;
+            }
+
+            console.log(solution(3, 2)); // 9
+        </script>
+    </body>
+</html>

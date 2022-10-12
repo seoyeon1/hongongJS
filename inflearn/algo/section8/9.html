@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 동전 교환 - DFS (중복 순열 유사)
+            // 금액M을 구성하는 최소 동전 개수
+
+            function solution(m, arr){ // 금액, 동전 종류 배열
+                let answer=Number.MAX_SAFE_INTEGER;
+                let n = arr.length;
+                
+                function DFS(L, sum){
+                    if(sum > m) return;
+                    if(L >= answer) return; // 동전 부분집합이 최소 개수보다 많으면 X
+                    if(sum === m){
+                        answer = Math.min(answer, L); // 최소 동전 개수 결정
+                    }
+                    else{
+                        for(let i=0; i<n; i++){
+                            DFS(L+1, sum+arr[i]); // m이상이 될 때까지 동전 추가해가기
+                        }
+                    }
+                }
+
+                DFS(0, 0);
+                return answer;
+            }
+
+            let arr=[1, 2, 5];
+            console.log(solution(15, arr)); // 3
+        </script>
+    </body>
+</html>
