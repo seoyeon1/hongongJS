@@ -1,0 +1,47 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 경로탐색 - DFS & 인접리스트
+            // 정점의 개수가 많을 때는 인접리스트 권장 : 각 정점에서 갈 수 있는 정점 개수만큼만 반복할 수 있어서 
+
+            function solution(n, arr){  
+                let answer=0;
+                let graph=Array.from(Array(n+1), ()=>Array());
+                let ch=Array.from({length : n+1}, ()=>0); // 체크 배열
+                let path=[] // 1~n까지 경로 저장
+                for(let [a, b] of arr){ //
+                    graph[a].push(b); // a행에다가 갈 수 있는 정점 정보 추가
+                }
+                function DFS(v){
+                    if(v===n){
+                        answer++;
+                        console.log(path);
+                    }
+                    else{
+                        for(let nv of graph[v]){ 
+                             
+                            if(ch[nv]===0){ // 갈 수 있지만 아직 방문 안한 곳
+                                path.push(nv);
+                                ch[nv]=1; // 체크하고
+                                DFS(nv); // 해당 정점으로 넘어가고
+                                ch[nv]=0; // 체크 해제
+                                path.pop();
+                            }
+                        }
+                    }
+                }
+                ch[1]=1;
+                path.push(1);
+                DFS(1);
+                return answer;
+            }
+
+            let arr=[[1, 2], [1, 3], [1, 4], [2, 1], [2, 3], [2, 5], [3, 4], [4, 2], [4, 5]];
+            console.log(solution(5, arr));
+        </script>
+    </body>
+</html>
