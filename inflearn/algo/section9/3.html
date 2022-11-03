@@ -1,0 +1,45 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>출력결과</title>
+    </head>
+    <body>
+        <script>
+            // 미로탐색 - DFS
+            
+            function solution(board){  
+                let answer=0; // 탈출 경로 경우의 수
+                let dx=[-1, 0, 1, 0]; // 방향 좌표(상하좌우)
+                let dy=[0, 1, 0, -1];
+                function DFS(x, y){
+                    if(x===6 && y===6) answer++; // 도착점 도착
+                    else{
+                        for(let k=0; k<4; k++){ // 방향좌표 활용해서 상하좌우 구역 탐색
+                            let nx = x+dx[k];
+                            let ny = y+dy[k];
+
+                            if(nx>=0 && nx<=6 && ny>=0 && ny<=6 && board[nx][ny]===0){ // 탐색가능한지 인덱스 범위 체크
+                                board[nx][ny]=1; // 이동하기 전 체크하고
+                                DFS(nx, ny); // 다음 구역 이동
+                                board[nx][ny]=0; // 이전 칸으로 돌아가기
+                            }
+                        }
+                    }
+                }
+                board[0][0]=1; // 출발점
+                DFS(0, 0);
+                return answer;
+            }
+
+            let arr=[[0, 0, 0, 0, 0, 0, 0], 
+                     [0, 1, 1, 1, 1, 1, 0],
+                     [0, 0, 0, 1, 0, 0, 0],
+                     [1, 1, 0, 1, 0, 1, 1],
+                     [1, 1, 0, 0, 0, 0, 1],
+                     [1, 1, 0, 1, 1, 0, 0],
+                     [1, 0, 0, 0, 0, 0, 0]];
+
+            console.log(solution(arr)); // 8
+        </script>
+    </body>
+</html>
