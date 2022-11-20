@@ -5,17 +5,21 @@
     </head>
     <body>
         <script>
-            // 계단 오르기
+            // 계단 오르기 - DP(동적 프로그래밍)
+            // DP : 작은 문제를 해결 > 결과를 저장해두고 그 값 & 관계식(점화식)을 활용해 더 큰 문제를 해결하는 방법
+            // 1회 이동 > 1/2칸
 
             function solution(n){  
                 let answer=0;
-                let dy=Array.from({length:n+1}, ()=>0);
+                let dy=Array.from({length:n+1}, ()=>0); // 다이나믹 테이블 생성
+                // 작은 문제(계단 1칸, 2칸 올라가는 경우의 수) 해결 & 초기화
                 dy[1]=1;
                 dy[2]=2;
 
                 for(let i=3; i<=n; i++){ // 3번 계단 ~ n번 계단까지
-                    dy[i]=dy[i-2]+dy[i-1]; // i번째 계단까지 올라오는 경우의 수
+                    dy[i]=dy[i-2]+dy[i-1]; // i번째 계단까지 올라오는 경우의 수(관계식)
                 }
+                
                 answer=dy[n];
                 return answer;
             }
