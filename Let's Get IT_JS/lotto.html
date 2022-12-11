@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>로또 추첨기</title>
+  <style>
+    .ball {
+        display: inline-block;
+        border: 1px solid black;
+        border-radius: 20px;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 20px;
+        text-align: center;
+        margin-right: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div id="result">추첨 결과는? </div>
+  <div id="bonus">보너스 : </div>
+
+  <script>
+    const candidate = Array(45).fill().map((v, i) => i + 1); // 1 ~ 45 로또 숫자 배열
+    // 로또 숫자를 섞은 후, 앞에서 숫자 7개 뽑기 - 피셔 예이츠 셔플 알고리즘
+    const shuffle = []; // 전체 로또 번호를 섞은 결과 저장
+    while (candidate.length > 0) {
+        const random = Math.floor(Math.random() * candidate.length); // 무작위로 인덱스 선택
+        const spliceArray = candidate.splice(random, 1); // splice의 리턴값은 배열 형태
+        const value = spliceArray[0];
+        shuffle.push(value); // splice한 값을 셔플에 추가
+    }
+    console.log(shuffle);
+
+    // [두 값 비교] a - b > 0 : b, a / a - b < 0 : a, b 순서대로 정렬 (0이면 순서 유지)
+    const winBalls = shuffle.slice(0, 6).sort((a, b)=> a-b); // 뽑은 공 오름차순 정렬(slice(시작, 끝(포함X)) : 원본 수정X (splice(시작, 개수): 원본 수정O))
+    const bonus = shuffle[6];
+    console.log(winBalls, shuffle);
+
+    // 공 색칠하기 - 숫자에 따라 색 차이
+    function colorize(number, $tag) {
+        if (number < 10) {
+            $tag.style.backgroundColor = 'red';
+            $tag.style.color = 'white';
+        } else if (number < 20) {
+            $tag.style.backgroundColor = 'orange';
+        } else if (number < 30) {
+            $tag.style.backgroundColor = 'yellow';
+        } else if (number < 40) {
+            $tag.style.backgroundColor = 'blue';
+            $tag.style.color = 'white';
+        } else {
+            $tag.style.backgroundColor = 'green';
+            $tag.style.color = 'white';
+        }
+    }
+
+    // 일정 시간 후 실행하기 - setTimeout(콜백함수, ms(1000ms : 1s)) : 지정한 시간 이후에 함수 실행 
+    const $result = document.querySelector('#result');
+
+    const drawBall = (number, $parent) => {
+        const $ball = document.createElement('div');
+        $ball.className = 'ball'; // 클래스명
+        colorize(number, $ball); // 공 색칠하기
+        $ball.textContent = number;
+        $parent.appendChild($ball);
+    };
+
+    for (let i = 0; i < 6; i++) { // 당첨 공 화면에 표시
+        setTimeout(() => {
+            drawBall(winBalls[i], $result);
+        }, (i + 1)*1000); // 각 초마다 공 생성
+    }
+
+    const $bonus = document.querySelector('#bonus'); // 보너스공 표시 
+    setTimeout(() => {
+        drawBall(bonus, $bonus);
+    }, 7000);
+
+  </script>
+</body>
+</html>

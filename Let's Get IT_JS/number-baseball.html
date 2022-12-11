@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>숫자야구</title>
+</head>
+<body>
+  <form id="form">
+    <input type="text" id="input">
+    <button>확인</button>
+  </form>
+  <div id="logs"></div>
+
+  <script>
+    const $input = document.querySelector('#input');
+    const $form = document.querySelector('#form');
+    const $logs = document.querySelector('#logs');
+    
+    // 1 ~ 9 숫자 중 무작위로 4개 뽑기(중복X) - Math.random() : 0 <= 랜덤값 < 1 생성
+    const numbers = []; // 숫자카드 배열 [1,2,3,4,5,6,7,8,9]
+    for (let n = 0; n < 9; n+= 1) {
+      numbers.push(n + 1);
+    }
+
+    const answer = []; // 정답 배열
+    for (let n = 0; n < 4; n += 1) { 
+      const idx = Math.floor(Math.random() * (numbers.length)); // 인덱스를 이용해 숫자 뽑기(numbers.length : 선택하면 해당 카드는 배열에서 삭제되는 점 고려)
+      answer.push(numbers[idx]); // 뽑은 숫자를 정답 배열에 추가 기존 카드 배열에서 삭제
+      numbers.splice(idx, 1);
+    }
+    // console.log(answer);
+
+    // JS로 입력값 검증하기
+    const tries = []; // 시도한 값 저장
+    function checkInput(input) { // 검사하는 코드
+      // html에서 정규표현식으로 입력값 검사 : minlength="4" maxlength="4" pattern="^(?!.*(.).*\1)\d{4}$"
+      
+      if ( input.length !== 4) { // 길이 : 4자리
+        return alert('4자리 숫자를 입력해 주세요.');
+      }
+      if (new Set(input).size !== 4) { // 숫자 중복 X (중복 없는 배열(Set)로 중복 검사)
+        return alert('중복되지 않게 입력해 주세요.');
+      }
+      if (tries.includes(input)) { // 이전에 시도한 값 X
+        return alert('이미 시도한 값입니다.');
+      }
+      return true;
+    }
+
+    function defeated() { // 패배했을 때
+      const message = document.createTextNode(`패배! 정답은 ${answer.join('')}`); // 텍스트 만드는 메서드로 실패 메시지 생성
+      $logs.appendChild(message); // 로그에 메시지 추가
+    }
+    
+    let out = 0; // 아웃 카운트
+    $form.addEventListener('submit', (event) =>{ 
+      event.preventDefault(); // 태그의 기본 동작 막기 > form의 기본 동작(새로고침) 막기
+      const value = $input.value; // 입력값 저장 & 입력창 지우기 (event.target[0] 가능)
+      $input.value = ''; 
+      if (!checkInput(value)) {
+        return;;
+      }
+      // 입력값이 문제 없을 때
+      if (answer.join('') === value) { // 홈런(정답===입력값)인지
+        $logs.textContent = '홈런!';
+        return;
+      }
+      if (tries.length >= 9) { // 10번 째 시도했는데 실패한 경우
+        defeated();
+        return;
+      }
+
+      // 볼 & 스트라이크 검사
+      let strike = 0;
+      let ball = 0;
+      for (let i = 0; i < answer.length; i++) {
+        const index = value.indexOf(answer[i]);
+        if (index > -1) { // 정답과 일치하는 숫자가 존재
+          if (index === i) { // 자리도 같을 때 > 스트라이크
+            strike += 1;
+          }
+          else { // 숫자만 같을 때 > 볼
+            ball += 1;
+          }
+        }
+      }
+
+      // 아웃 기능
+      if (strike === 0 && ball === 0) {
+        out++;
+        $logs.append(`${value} : 아웃(${out}회) `, document.createElement('br')); // 아웃 메시지 
+      }
+      else {
+        $logs.append(`${value} : ${strike} 스트라이크, ${ball} 볼`, document.createElement('br')); // append로 문자열과 태그를 한번에 여러 개 추가(appendChild는 1개만 추가 가능)
+      }
+      if (out === 3) { // 3아웃 > 패배
+        defeated();
+        return;
+      }
+      // 힌트(검사 결과), 시도한 값 추가
+      tries.push(value); 
+    });
+
+  </script>
+</body>
+</html>
