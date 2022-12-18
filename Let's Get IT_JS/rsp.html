@@ -1,0 +1,105 @@
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>가위바위보</title>
+  <style>
+    #computer {
+      width: 142px;
+      height: 200px;
+    }
+  </style>
+</head>
+
+<body>
+<div id="computer"></div>
+<div>
+  <button id="scissors" class="btn">가위</button>
+  <button id="rock" class="btn">바위</button>
+  <button id="paper" class="btn">보</button>
+</div>
+<div id="score">0</div>
+<script>
+  const $computer = document.querySelector('#computer');
+  const $score = document.querySelector('#score');
+  const $rock = document.querySelector('#rock');
+  const $scissors = document.querySelector('#scissors');
+  const $paper = document.querySelector('#paper');
+
+  const IMG_URL = './rsp.png'; // 이미지 경로(상대 경로)
+  $computer.style.background = `url(${IMG_URL}) 0 0`; // css의 background 속성으로 이미지 위치(x좌표, y좌표) 지정 e.g. 가위 : 0 0, 바위 : -220px 0, 보 : -440px 0
+  $computer.style.backgroundSize = 'auto 200px'; // 이미지 크기 조절 : 높이 200px 지정, 너비는 높이(200)에 맞춤(auto)
+  
+  const rspX = { // 각 동작의 x좌표를 객체로 표현
+    scissors: '0', // 가위
+    rock: '-220px', // 바위
+    paper: '-440px', // 보
+  };
+
+  // setInterval(함수,ms) : 일정 시간(ms)마다 동작 반복. 반환 값 : 타이머 id(이 값으로 타이머 제거 가능)
+  // setInterval효과는 setTimeout을 재귀적으로 사용해서 대체 가능
+  let computerChoice = 'scissors'; // 컴퓨터가 낼 동작
+  const changeComputerHand = () => {
+    if (computerChoice === 'scissors') { // 가위일 때
+      computerChoice = 'paper';
+    } else if (computerChoice === 'rock') { // 바위
+      computerChoice = 'scissors';
+    } else { // 보
+      computerChoice = 'rock';
+    }
+    // 데이터가 바꾸면 화면도 따라 바꿔주자 > 컴퓨터가 선택한 동작 화면에 표시
+    $computer.style.background = `url(${IMG_URL}) ${rspX[computerChoice]} 0`;
+    $computer.style.backgroundSize = 'auto 200px';
+  } 
+  
+  // clearTimeout, clearInterval : 타이머 제거 
+  let intervalId = setInterval(changeComputerHand, 50); // 타이머 id 저장
+  
+  const scoreTable = { // 동작 별 점수표
+    rock: 0,
+    scissors: 1,
+    paper: -1,
+  };
+
+  let clickable = true; // flag 변
+  let score = 0; // 총점
+  const clickButton = () => {
+    if (clickable) {
+      clearInterval(intervalId);
+      clickable = false;
+
+      const myChoice = event.target.textContent === '바위' // 내가 선택한 동작
+        ? 'rock'
+        : event.target.textContent === '가위'
+          ? 'scissors'
+          : 'paper';
+      const myScore = scoreTable[myChoice]; // 나의 점수
+      const computerScore = scoreTable[computerChoice]; // 컴퓨터의 점수
+
+      // [가위바위보 규칙] - 가위 : 1, 바위 : 0, 보 : -1
+      // 무승부 : 0, 승리 : 2 / -1, 패배 : 1 / -2
+      const diff = myScore - computerScore; // 점수 계산
+      let message; // 승패 여부 메시지
+      if ([2, -1].includes(diff)) {
+        score += 1;
+        message = '승리';
+      } else if ([-2, 1].includes(diff)) {
+        score -= 1;
+        message = '패배';
+      } else {
+        message = '무승부';
+      }
+      $score.textContent = `${message} 총: ${score}점`;
+      setTimeout(() => {
+        clickable = true;
+        intervalId = setInterval(changeComputerHand, 50);
+      }, 1000);
+    }
+  };
+  
+  $rock.addEventListener('click', clickButton);
+  $scissors.addEventListener('click', clickButton);
+  $paper.addEventListener('click', clickButton);
+  
+</script>
+</body>
+</html>
